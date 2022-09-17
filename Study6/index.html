@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/reset.css">
+</head>
+<body>
+
+    <div class="content">
+
+        <div class="header">
+            <ul id="nav" class="gnb">
+                <li><a class="java menu" href="#" title="자바스크립트">Javascript</a></li>
+                <li><a class="html menu" href="#" title="HTML">HTML</a></li>
+                <li><a class="css menu" title="CSS">CSS</a></li>
+                <li><a class="scss menu" href="#" title="SCSS">SCSS</a></li>
+                <li><a class="etc menu" href="#" title="ETC">기타</a></li>
+            </ul>
+        </div>
+
+        
+        <div class="container">
+
+            <div class="javascriptWrap">
+                <h1>자바스크립트 공부중</h1>
+
+                <div class="alertBox" id="alert">
+                    <p>Alert Box 입니다</p>
+                    <button class="alertControl" onclick="boxClose()">Alert Box 닫기</button>
+                </div>
+                
+                <button class="alertControl1" onclick="boxOpen()">Alert Box 열기</button>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            푸터입니다
+        </div>
+
+    </div>
+
+</body>
+
+<script type="text/javascript">
+        
+    
+        function boxOpen() {
+                document.getElementById('alert').style.display = 'block';
+            }
+        function boxClose() {
+                document.getElementById('alert').style.display = 'none';
+            }
+
+    
+        var tag = document.getElementsByTagName('div');
+            id = document.getElementById('nav'),
+            claasn = document.getElementsByClassName('menu'),
+            Selectortag = document.querySelector('div'),
+            Selectorclass = document.querySelector('.menu'),
+            Selectorid = document.querySelector('#nav'),
+            Selectoralltag = document.querySelectorAll('div'),
+            Selectorallclass = document.querySelectorAll('.menu'),
+            Selectorallid = document.querySelectorAll('#nav');
+
+        console.log(nav);
+
+        document.getElementById( 'nav' ).setAttribute('title', 'This is title')
+        document.getElementsByClassName( 'menu' )[0].removeAttribute('class')
+        document.getElementsByClassName( 'css' )[0].setAttribute('href', 'https://www.naver.com/')
+
+    
+    // 선택자 사용하여 셀렉터
+    // 1. getElementById
+    // 2. getElementsByClassName
+    // 3. getElementsByTagName
+    // 4. querySelector
+    // 5. querySelectorAll
+    // 6. Attribute 속성변경 
+                
+</script>
+
+</html>

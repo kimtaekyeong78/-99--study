@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <title>Document</title> 
+</head>
+
+<body>  <!-- 예제 요소 -->
+      <input type="text" id="test" class="test1 test2" data-value="hello world">
+  <script>    // id가 test인 요소를 선택한다.
+    var $item = document.getElementById("test");
+    // id 속성을 제거한다.
+    $item.removeAttribute("id");
+    // class 속성을 제거한다.
+    $item.removeAttribute("class");
+    // data-value 속성을 제거한다.
+    $item.removeAttribute("data-value");
+  </script>
+ </body>
+</html>
