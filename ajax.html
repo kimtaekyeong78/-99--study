@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<title>javascript</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
+	<script type="text/javascript">
+		
+		
+		window.onload = function(){
+			_f_initAjaxList()
+		}
+		
+		
+		// JQUERY AJAX
+		function _f_initAjaxList(){
+
+			let param1 = 20220801; // 서버로 보내야할 데이터 1
+			let param2 = 11; // 서버로 보내야할 데이터 2
+
+			
+			try{
+				$.ajax({
+					url: `http://data.ex.co.kr/openapi/restinfo/restWeatherList?key=test&type=json&sdate=${param1}&stdHour=${param2}`,
+					method: 'GET',
+					async: true,
+					dataType: 'json',
+					success : function (response) {
+
+						let _weatherHTML = ''
+						let _weatherOPTION = ''
+
+						_weatherOPTION += '<option selected>휴계소를 선택해 주세요</option>';
+						for(var key in response.list) {
+							
+							//console.log(key);
+							//console.log(response.list[key]);
+
+							_weatherOPTION += '<option value="'+ key +'">'+ response.list[key].unitName +'</option>';
+						}
+
+						document.getElementsByName('unitName')[0].innerHTML = _weatherOPTION;
+
+
+						//SELECT OPTION ONCHANGE EVENT
+						document.getElementsByName('unitName')[0].onchange = function(e){
+							
+							
+							let _index = response.list[e.target.value]
+							document.getElementById('ajaxList').innerHTML = ""
+							function getToday(){
+								var year = _index.sdate.slice(0, 4) + '년';
+								var month = _index.sdate.slice(4, 6) + '월';
+								var day = _index.sdate.slice(6, 8) + '일';
+
+								return year + month + day;
+							}
+
+							document.getElementById('ajaxList').innerHTML = '<li>날씨상태 : '+ _index.weatherContents +'</li>'
+
+
+						}
+						
+					},
+					error: function (xhr) {
+						alert(xhr)
+					}
+					
+				});
+			}
+			catch(e){
+				//AJAX 로드 실패
+				alert(e)
+			}
+		}	
+	
+		
+		
+
+	</script>
+</head>
+<body>
+	
+	<div id="test">
+
+		<div>
+			<h1>title</h1>
+			
+			<div id="listWrap">
+			
+				<select name="unitName">
+					<option selected value="0">휴계소를 선택해 주세요</option>
+				</select>
+
+				<div id="ajaxList"></div>
+			</div>
+		</div>
+
+	</div>
+    
+
+</body>
+</html>

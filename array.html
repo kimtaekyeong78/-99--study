@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<title>javascript</title>
+
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
+	<script type="text/javascript">
+
+		window.onload = function(){
+		
+			const LISTHTML = document.getElementById('listWrap')
+			let _array1 = new Array(
+				{name:'kim', age:17, address:'Republic of Korea, Seoul'},
+				{name:'Park', age:28, address:'Japan'},
+			)
+			_array1.expend = 'test'
+			
+			// let _array2 = [
+			// 	{name:'kim', age:17, address:'Republic of Korea, Seoul'},
+			// 	{name:'Park', age:28, address:'Japan'},
+			// ];
+
+			let _listHTML = ''
+
+			// for 기존방식
+			// 가장많이 보편화 되어있는 구현방식
+			// for( i=0; i < _array1.length; i++){
+
+			// 	_listHTML += '<ul>';
+			// 	_listHTML += '<li>'+ _array1[i].name +'</li>';
+			// 	_listHTML += '<li>'+ _array1[i].age +'</li>';
+			// 	_listHTML += '<li>'+ _array1[i].address +'</li>';
+			// 	_listHTML += '</ul>';
+
+			// }
+
+			// Only arrary
+			// forEach는 Javascript에서 only Araary에만 사용가능하며, 실제로 arrary반복문 시 많이 쓰임(기존방식보단 살작 느림??)
+			// _array1.forEach(function(item, index, arr){
+			// 	_listHTML += '<ul>';
+			// 	_listHTML += '<li>'+ item.name +'</li>';
+			// 	_listHTML += '<li>'+ item.age +'</li>';
+			// 	_listHTML += '<li>'+ item.address +'</li>';
+			// 	_listHTML += '</ul>';
+				
+			// 	console.log(item);
+			// 	console.log(index);
+			// 	console.log(arr);
+			// })
+			
+			// For in ~
+			// 이 방법은 Vue에서도 비슷한 디렉티브를 제공하기에 개인적으로 좋음
+			// for(var key in _array1) {
+			// 	_listHTML += '<ul>';
+			// 	_listHTML += '<li>'+ _array1[key].name +'</li>';
+			// 	_listHTML += '<li>'+ _array1[key].age +'</li>';
+			// 	_listHTML += '<li>'+ _array1[key].address +'</li>';
+			// 	_listHTML += '</ul>';
+
+			// 	console.log(key);
+			// 	console.log(_array1[key]);
+
+			// }
+
+
+			// ES6 NEW For of ~
+			for(var value of _array1){ 
+				_listHTML += '<ul>';
+				_listHTML += '<li>'+ value.name +'</li>';
+				_listHTML += '<li>'+ value.age +'</li>';
+				_listHTML += '<li>'+ value.address +'</li>';
+				_listHTML += '</ul>';
+
+				console.log(value);
+			}
+
+
+			LISTHTML.innerHTML = _listHTML
+
+
+		}
+
+	</script>
+</head>
+<body>
+	
+	<div id="test">
+
+		<div id="listWrap"></div>
+
+	</div>
+    
+
+</body>
+</html>

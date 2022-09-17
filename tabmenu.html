@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<title>javascript</title>
+
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
+	<script type="text/javascript">
+
+		window.onload = function(){
+
+			// function _querySelector(selector, type){
+
+			// 	if( type == 'all'){
+			// 		document.querySelectorAll(selector)	
+
+			// 	}else if(type == null){
+			// 		document.querySelector(selector)
+			// 	}
+			// }
+
+			const _tabWrap = document.getElementById('tabwrap')
+			const _tabButton = _tabWrap.getElementsByTagName('li')
+			
+			for(var i=0; i < _tabButton.length; i++ ){
+
+				_tabButton[i].onclick = function(e){
+
+					let _target = e.target
+					let _parent = _target.parentNode
+					let _index = [].indexOf.call(_parent.children, _target)
+					let _tabContent = document.getElementsByClassName('contents')
+
+					document.querySelector('li.active').classList.remove('active')
+					document.querySelector('div.active').classList.remove('active')
+
+					this.classList.add('active')
+					_tabContent[_index].classList.add('active')
+
+					//console.log(_tabContent[_index].getAttribute('data-num'))
+					
+				}
+
+			}
+			
+		}
+
+	</script>
+</head>
+<body>
+	
+	<div id="test">
+
+		<div id="tabwrap">
+
+			<ul>
+				<li class="active">tab1</li>
+				<li>tab2</li>
+				<li>tab3</li>
+			</ul>
+
+			<div class="contents active" data-num="0">content1</div>
+			<div class="contents" data-num="1">content2</div>
+			<div class="contents" data-num="2">content3</div>
+
+		</div>
+
+	</div>
+    
+
+</body>
+</html>
