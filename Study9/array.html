@@ -7,6 +7,10 @@
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
 	<script type="text/javascript">
 
+		// 상품명, 가격
+		// > 내가담은것들
+		// > 내가 담은것들에 대한 ㄱ
+
 		window.onload = function(){
 			/**
 			 * 마트 상품
@@ -15,16 +19,57 @@
 			 * 체크 한 값 alert으로 노출
 			 * 
 			**/
+			let _htmlWrap = document.getElementById('test')
+			let _HTML = ''
 			
+			let _mart = ['사과', '복숭아', '바나나', '수박', '키위']
+		
+			for(i=0; i < _mart.length; i++) {
 
+				_HTML += '<input id="mart'+i+1+'" type="checkbox" name="mart" value="'+_mart[i]+'" />';
+				_HTML += '<label for="mart'+i+1+'">'+_mart[i]+'</label>'
 
+				
+			}
+			_htmlWrap.innerHTML = _HTML
+			
+			let input = document.getElementsByTagName('input')
+			
+			let _arrary = []
+
+			for( i=0; input.length > i; i++){
+				
+				input[i].addEventListener('click', function(e){
+					let target = e.currentTarget;
+					
+					_arrary.push(target.value) 
+					
+				})
+
+			}
+
+			document.getElementById('btn').addEventListener('click', function(){
+				
+				if( _arrary.length ){
+
+					alert(_arrary)
+					document.getElementById('price').style.display = 'block'
+					
+					
+				}else{
+					alert('장바구니에 상품을 담아주세요')
+					return false
+					//계산버튼
+				}
+				
+			})
 		}
-
+		
 	</script>
 </head>
 <body>
-	
-    
-
+	<div id="test"></div>
+	<button id="btn">장바구니</button>
+	<button id="price" style="display: none">계산</button>
 </body>
 </html>
