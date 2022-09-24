@@ -11,12 +11,21 @@
 		
 		window.onload = function(){
 		
+<<<<<<< HEAD
 			//_f_initIfElse()
 
+=======
+			_f_initIfElse()
+>>>>>>> cca7ed51b4de2d7fe2cec6458211c58f9c28de7b
 		}
-		
+	
 		function _f_initIfElse(){
+			
+			
+			let _inputValue = document.getElementById('input').value
+			let _textWrap = document.getElementById('test')
 
+<<<<<<< HEAD
 			var _inputValue = document.getElementById('input').value
 			var _textWrap = document.getElementById('test')
 
@@ -36,19 +45,52 @@
 
 		}
 		
+=======
+
+			console.log(_inputValue)
+			
+			if( _inputValue === '방정훈'){
+				_textWrap.innerHTML = '나는 '+ _inputValue +' 입니다'
+				
+
+			}else if( _inputValue === '방현지' ){
+				_textWrap.innerHTML = '나는 '+ _inputValue +' 입니다'
+
+			}else if( _inputValue === ''){
+				_textWrap.innerHTML = '값 넣어라'
+			}
+
+			_textWrap.setAttribute('title', _inputValue)
+		}
+
+			
+			// 조건 === 1 ? console.log('test'): console.log('te4st22234e234');
+			
+			
+
+>>>>>>> cca7ed51b4de2d7fe2cec6458211c58f9c28de7b
 	
 	</script>
 </head>
 <body>
 	
+<<<<<<< HEAD
 	<section id="main">
 
 		<input id="input" type="text" name="" value="" onchange="_f_initIfElse()">
+=======
+	<section id="main" >
+>>>>>>> cca7ed51b4de2d7fe2cec6458211c58f9c28de7b
 		
+		<!-- <input id="input" type="text" name="" value="" onchange="_f_initIfElse()" /> -->
 
+<<<<<<< HEAD
 		<div id="test"></div>
 
-	</section>
+=======
 
+		<div id="test" name=""></div>
+>>>>>>> cca7ed51b4de2d7fe2cec6458211c58f9c28de7b
+	</section>
 </body>
 </html>
