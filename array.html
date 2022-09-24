@@ -3,18 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-	<title>javascripts/title>
+	<title>javascript</title>
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
 	<script type="text/javascript">
 
 		window.onload = function(){
 		
 			const LISTHTML = document.getElementById('listWrap')
+
 			let _array1 = new Array(
 				{name:'kim', age:17, address:'Republic of Korea, Seoul'},
 				{name:'Park', age:28, address:'Japan'},
 			)
-			_array1.expend = 'test'
+			//indexOf 배열에서 원하는 값 찾기
+			
 			
 			// let _array2 = [
 			// 	{name:'kim', age:17, address:'Republic of Korea, Seoul'},
@@ -25,18 +27,18 @@
 
 			// for 기존방식
 			// 가장많이 보편화 되어있는 구현방식
-			// for( i=0; i < _array1.length; i++){
+			for( i=0; i < _array1.length; i++){
 
-			// 	_listHTML += '<ul>';
-			// 	_listHTML += '<li>'+ _array1[i].name +'</li>';
-			// 	_listHTML += '<li>'+ _array1[i].age +'</li>';
-			// 	_listHTML += '<li>'+ _array1[i].address +'</li>';
-			// 	_listHTML += '</ul>';
+				_listHTML += '<ul>';
+				_listHTML += '<li>'+ _array1[i].name +'</li>';
+				_listHTML += '<li>'+ _array1[i].age +'</li>';
+				_listHTML += '<li>'+ _array1[i].address +'</li>';
+				_listHTML += '</ul>';
 
-			// }
+			}
 
 			// Only arrary
-			// forEach는 Javascript에서 only Araary에만 사용가능하며, 실제로 arrary반복문 시 많이 쓰임(기존방식보단 살작 느림??)
+			//forEach는 Javascript에서 only Araary에만 사용가능하며, 실제로 arrary반복문 시 많이 쓰임(기존방식보단 살작 느림??)
 			// _array1.forEach(function(item, index, arr){
 			// 	_listHTML += '<ul>';
 			// 	_listHTML += '<li>'+ item.name +'</li>';
@@ -65,15 +67,15 @@
 
 
 			// ES6 NEW For of ~
-			for(var value of _array1){ 
-				_listHTML += '<ul>';
-				_listHTML += '<li>'+ value.name +'</li>';
-				_listHTML += '<li>'+ value.age +'</li>';
-				_listHTML += '<li>'+ value.address +'</li>';
-				_listHTML += '</ul>';
+			// for(var value of _array1){ 
+			// 	_listHTML += '<ul>';
+			// 	_listHTML += '<li>'+ value.name +'</li>';
+			// 	_listHTML += '<li>'+ value.age +'</li>';
+			// 	_listHTML += '<li>'+ value.address +'</li>';
+			// 	_listHTML += '</ul>';
 
-				console.log(value);
-			}
+			// 	console.log(value);
+			// }
 
 
 			LISTHTML.innerHTML = _listHTML
@@ -84,7 +86,6 @@
 	</script>
 </head>
 <body>
-	
 	<div id="test">
 
 		<div id="listWrap"></div>
