@@ -1,3 +1,47 @@
-.test {
-    background: #000;
+
+#container {
+    width: 1200px;
+    margin: 0 auto ;
+
+    > h1 {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    #itemWrap {
+        margin-top: 20px;
+        border: 1px solid #333;
+        
+        #itemListWrap {
+            padding: 10px;
+            box-sizing: border-box;
+            
+            > li {
+                display: flex;
+                margin-top: 10px;
+
+                
+            }
+        }
+    }
+
+    #cartbt {
+        display: block;
+        width: 500px;
+        margin: 20px auto;
+        height: 40px;
+
+    }
+    
+    #cartWrap {
+        position: fixed;
+        top: 30%;
+        left: 550px;
+        display: block;
+        width: 800px;
+        height: 600px;
+        margin: 0 auto;
+    }
 }

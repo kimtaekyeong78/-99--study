@@ -3,16 +3,120 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-	<title>javascript</title>
-	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/css/arraysrudy.css">
-	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/css/reset.css">
+	<title>Study10</title>
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/arraystudy.css">
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/reset.css">
 	<script type="text/javascript">
+
+		window.onload = function() {
+
+			let _martlisWrap = document.getElementById('itemWrap')
+			let _cartlisWrap = document.getElementById('cartWrap')
+			let chklist = document.getElementById('itemListWrap');
+			let _HTML = ''
+			let __HTML = ''
+
+			let martitem = [
+				['바나나', 1000],
+				['딸기', 2000],
+				['사과', 3000],
+				['오렌지', 4000],
+			]
+		
+			// 반복문을 통해 전체 배열 출력, 체크박스와 첫번째 인덱스만 가지고옴
+			for(let i=0; i < martitem.length; i++ ){
+
+				_HTML += '<li>' + '<input id="martitemlist'+i+1+'" type="checkbox" name="mart" value="'+martitem[i][1]+'" />' + '<label for="martitemlist'+i+1+'">'+martitem[i][0]+'</label>' + '<input id="count'+i+'" value="0" type="number" name="count">' + '</li>';		
+
+			}
+			
+			//innerHTML을 통해 생성
+			_martlisWrap.innerHTML = _HTML
+
+
+			//체크박스 변수지정
+			let input = document.getElementsByName('mart')
+			let count = document.getElementById('count')
+					console.log(count)
+
+
+
+			//빈 배열 생성
+			let _arrary = []
+
+			for( i=0; input.length > i; i++ ){
+
+				input[i].addEventListener('click', function(e){
+					
+					let target = e.currentTarget;
+
+					if( _arrary.includes(target.value) == false ){
+
+						_arrary.push(target.value);
+						
+					}else if( _arrary.includes(target.value) == true ){
+
+						_arrary.pop(target.value);
+						
+						
+					}else{
+
+						return false
+
+					}
+				})
+			}
+
+			document.getElementById('cartbt').addEventListener('click', function(){
+				
+				if( _arrary.length ){
+
+					_cartlisWrap.innerHTML = _arrary;	
+					
+
+
+					
+					
+				}else{
+					alert('장바구니에 상품을 담아주세요')
+					return false
+					//계산버튼
+
+				}
+				
+			})
+
+		}
 
 	</script>
 </head>
 <body>
-	<div id="test"></div>
-	<button id="btn">장바구니</button>
-	<button id="price" style="display: none">계산</button>
+	<div id="container">
+
+		<h1>Cart 만들기</h1>
+
+		<div id="itemWrap">
+			<ul id="itemListWrap">
+			</ul>
+		</div>
+
+		<button id="cartbt" >카트 목록 보기</button>
+		<div id="cartWrap">
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		// let itemcount = document.getElementById('itemcount');
+	
+		// function plus(){
+		// 	itemcount.innerHTML = itemcount.innerHTML+1;
+		// }
+	</script>
+
+	
+<!-- <script type="text/javascript">
+	
+</script> -->
 </body>
 </html>
