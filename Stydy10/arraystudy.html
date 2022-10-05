@@ -27,9 +27,9 @@
 			for(let i=0; i < martitem.length; i++ ){
 				_HTML += '<ul id="itemListWrap">';
 				_HTML += '<li class="item">';
-					_HTML += '<input id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ martitem[i].price +'" name="mart" value="'+martitem[i].name+'" />';
-					_HTML += '<label for="martitemlist'+i+1+'">'+martitem[i].name+'</label>';
-					_HTML += '<input id="count'+i+'" value="0" type="number" name="count">';
+					_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ martitem[i].price +'" name="mart" value="'+martitem[i].name+'" />';
+					_HTML += '<label for="martitemlist'+(i+1)+'">'+martitem[i].name+'</label>';
+					_HTML += '<input class="counts" id="count'+i+'" disabled value="0" type="number" name="count">';
 				_HTML += '</li></ul>'
 				
 			}
@@ -41,35 +41,58 @@
 
 			for( var i=0; _martItem.length > i; i++ ){
 
-				_martItem[i].addEventListener('change', function(event){
+				let _cheked = _martItem[i].querySelector('.name')
+
+				_cheked.addEventListener('change', function(event){
 
 					let _target = event.currentTarget
-				
+					let _target_data = _target.dataset.price;
+					let _target_name = _target.value;
+					let _target_count = _target.parentNode.querySelector('.counts')
+					let _carBt = document.getElementById('cartbt')
+					let _itemcart = document.getElementById('itemWrap')
 
+					if(_target.checked){
+						
+						_target_count.removeAttribute('disabled')
+						_target_count.value = 1
+						_carBt.removeAttribute('disabled')
+						
+						
+					}else{
+						_target_count.setAttribute('disabled', 'disabled')
+						_target_count.value = 0
+						_carBt.setAttribute('disabled', 'disabled')
+					}
+
+
+					_carBt.addEventListener('click', function(){
+
+						if(_target.checked){
+							_itemcart.style.display = 'bo'
+
+						}else{
+
+						}
+
+						_itemcart.innerHTML += _target_name + _target_data
+						
+					})
+			
 				})
-
 
 			}
 			
 			
+			let _cart = document.getElementById('cartbt')
+			// let test = document.getElementById('cartbt')
+			// 		console.log(_cart);
 
+			// 장바구니 담기
+			_cart.addEventListener('click', function(){
 
-			document.getElementById('cartbt').addEventListener('click', function(){
 				
-				if( _arrary.length ){
 
-					_cartlisWrap.innerHTML = _arrary;	
-					
-
-
-					
-					
-				}else{
-					alert('장바구니에 상품을 담아주세요')
-					return false
-					//계산버튼
-
-				}
 				
 			})
 
@@ -82,11 +105,9 @@
 
 		<h1>Cart 만들기</h1>
 
+		<button id="cartbt" disabled >장바구니 담기</button>
 		<div id="itemWrap">
-			
 		</div>
-
-		<button id="cartbt" >카트 목록 보기</button>
 		<div id="cartWrap">
 		</div>
 	</div>
@@ -94,6 +115,12 @@
 
 	
 <!-- <script type="text/javascript">
+
+
+1. 장바구니 담기
+2. 장바구니 뷰 ()
+3. 구매하기 
+   > 최종 구매한 것에 대한 배열을 새로 만들고, 
 	
 </script> -->
 </body>
