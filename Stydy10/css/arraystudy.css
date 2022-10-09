@@ -12,11 +12,11 @@
   margin-top: 20px;
   border: 1px solid #333;
 }
-#container #itemWrap #itemListWrap {
+#container #itemWrap #itemList {
   padding: 10px;
   box-sizing: border-box;
 }
-#container #itemWrap #itemListWrap > li {
+#container #itemWrap #itemList > li {
   display: flex;
   margin-top: 10px;
 }
@@ -27,11 +27,20 @@
   height: 40px;
 }
 #container #cartWrap {
-  position: fixed;
-  top: 30%;
   left: 550px;
   display: block;
   width: 800px;
   height: 600px;
   margin: 0 auto;
+}
+#container #cartWrap > ul > li .cartitem {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0px 10px;
+}
+#container #cartWrap > ul > li > span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff0000;
 }
