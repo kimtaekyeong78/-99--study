@@ -14,13 +14,17 @@
         margin-top: 20px;
         border: 1px solid #333;
         
-        #itemListWrap {
+        #itemList {
             padding: 10px;
             box-sizing: border-box;
             
             > li {
                 display: flex;
                 margin-top: 10px;
+
+                > .active {
+                    
+                }
 
                 
             }
@@ -36,12 +40,33 @@
     }
     
     #cartWrap {
-        position: fixed;
-        top: 30%;
         left: 550px;
         display: block;
         width: 800px;
         height: 600px;
         margin: 0 auto;
+
+        > ul {
+
+            > li {
+
+                .cartitem {
+                    display: inline-block;
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin: 0px 10px
+                }
+
+                > span {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #ff0000;
+                }
+
+            }
+        }
+
+
+
     }
 }
