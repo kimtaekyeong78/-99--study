@@ -24,7 +24,6 @@
 				{name:'사과', price: 3000},
 				{name:'오렌지', price: 4000},
 			)
-
 			let cartArray = new Array(
 			)
 		
@@ -33,7 +32,7 @@
 				_HTML += '<li class="item">';
 					_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ martitem[i].price +'" name="mart" value="'+martitem[i].name+'" />';
 					_HTML += '<label for="martitemlist'+(i+1)+'">'+martitem[i].name+'</label>';
-					_HTML += '<input class="counts" id="count'+i+'" disabled value="0" min="0" type="number" name="count">';
+					_HTML += '<input class="counts" id="count'+i+'" disabled min="0" type="number" name="count">';
 				_HTML += '</li>';
 				
 			}
@@ -59,63 +58,44 @@
 					let _target_this = this.checked
 					let _checkdAll = document.getElementsByClassName('active')
 
+
 					if(_target.checked){
 
-						cartArray.push({name : _target_name, price : _target_data})
-						// cartArray.push({name : _target_name, price : _target_data, item_acount : _target_data * _target_count.value})
+						cartArray.push({name : _target_name, price : _target_data, count : _target_count.value, amount :_target_data * _target_count})
 					
 						this.classList.add('active') //액티브 클래스
 						_target_count.value = 1 //카운트인풋1
 						_target_count.removeAttribute('disabled') //카운트disabled삭제
 					
+						
 						_target_count.addEventListener('change', function(event){
+
+						let cartArray_find = cartArray.findIndex(function(find) {
+
+							if(find.name === _target_name) {
+								return true;
+							}
+
+							return false;
+							
+							});
 							
 							if( _target_count.value  < 1 ) { //수량이 0이면, 비활성
 
-								_target.checked  = false;
-								_target.parentNode.querySelector('.name').classList.remove('active')
-								_target_count.setAttribute('disabled', 'disabled')
+							cartArray.splice(cartArray_find, 1)
+							_target.checked  = false;
+							_target.parentNode.querySelector('.name').classList.remove('active')
+							_target_count.setAttribute('disabled', 'disabled')
 
-							} else {
-								// 수량이 0보다 클 경우, 합산을 구한 배열을 추가
-								let cartArray_find = cartArray.findIndex(function(find) { 
 
-									if(find.name === _target_name) {
-
-										return true;
-									}
-
-									return false;
-																											
-								});
-								let item_target_count = _target_count.value
-								let item_Amountprice = cartArray[cartArray_find]['price'] * _target_count.value
-								
-								let cart_item_set = new Array(
-									{_target_name, _target_data , item_Amountprice, item_target_count}
-									)
-
-								let item_HTML = ""
-								let price_HTML = ""
-								let count_HTML = ""
-								let amountprice_HTML = ""
-
-								console.log(cart_item_set)
-												
-								for(let i=0; i < cart_item_set.length; i++ ){
-								
-								___HTML += '<tr class="cartlistarea">';
-									___HTML += '<td id="cartitem'+(i+1)+'">' + cartArray[i].name + '</td>';
-									___HTML += '<td id="cartprice'+(i+1)+'">' + cartArray[i].price + '</td>';
-									___HTML += '<td id="cartcount'+(i+1)+'">' + item_target_count + '</td>';
-									___HTML += '<td id="cartcountall'+(i+1)+'">' + cartArray[i].price * item_target_count + '</td>';
-								___HTML += '</tr>';
-								
-								}
-								cart_view.innerHTML = ___HTML
-
-							}
+							}else{
 							
+								cartArray[cartArray_find].count = _target_count.value
+								cartArray[cartArray_find].amount = _target_count.value * _target_data
+							
+								console.log(cartArray)
+							}
+									 												
 						})																
 											
 						if( _checkdAll.length == 0 ){
@@ -163,8 +143,7 @@
 
 			_carBt.addEventListener('click', function(){
 
-				
-															
+																			
 			})
 
 			
