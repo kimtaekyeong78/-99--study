@@ -12,6 +12,7 @@
 
 			let _cartlisWrap = document.getElementById('itemList')
 			let chklist = document.getElementById('itemListWrap')
+			let cart_view = document.getElementById('cartlistWrap')
 			let _HTML = ''
 			let __HTML = ''
 			let ___HTML = ''
@@ -104,17 +105,14 @@
 								for(let i=0; i < cart_item_set.length; i++ ){
 								
 								___HTML += '<tr class="cartlistarea">';
-									__HTML += '<td id="cartitem'+(i+1)+'">' + cartArray[i].name + '</td>'
-									__HTML += '<td id="cartprice'+(i+1)+'">' + cartArray[i].price + '</td>'
-									__HTML += '<td id="cartcount'+(i+1)+'">' + cartArray[i].count + '</td>'
-									__HTML += '<td">' + "해당 품목 합계금액" + '</td>' + '<td>' +  "test" + "원" + '</td>';
-								__HTML += '</tr>';
+									___HTML += '<td id="cartitem'+(i+1)+'">' + cartArray[i].name + '</td>';
+									___HTML += '<td id="cartprice'+(i+1)+'">' + cartArray[i].price + '</td>';
+									___HTML += '<td id="cartcount'+(i+1)+'">' + item_target_count + '</td>';
+									___HTML += '<td id="cartcountall'+(i+1)+'">' + cartArray[i].price * item_target_count + '</td>';
+								___HTML += '</tr>';
 								
 								}
-								
-
-
-							
+								cart_view.innerHTML = ___HTML
 
 							}
 							
@@ -166,8 +164,6 @@
 			_carBt.addEventListener('click', function(){
 
 				
-				__HTML += '<h3>' + "합계금액" + '</h3>' + '<span>' + "test" + '</span>';
-				document.getElementById('cartArea').innerHTML = __HTML
 															
 			})
 
@@ -195,7 +191,7 @@
 		</div>
 		<button id="cartbt" disabled >장바구니 담기</button>
 		<div id="cartWrap">
-			<tabl id="carttable">
+			<table id="carttable">
 				<thead>
 					<tr>
 						<td>품목</td>
@@ -205,12 +201,6 @@
 					</tr>
 				</thead>
 				<tbody id="cartlistWrap">
-					<tr id="cartlist">
-						<td id="cartitem">품목</td>
-						<td id="cart">단가</td>
-						<td>수량</td>
-						<td>해당품목 합계</td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
