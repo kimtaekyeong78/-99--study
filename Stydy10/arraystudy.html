@@ -40,10 +40,14 @@
 				{name:'포도', price: 8000},
 				{name:'석류', price: 5500},
 			)
+			// 카드에 담은 리스트 배열
 			let cartArray = new Array(
 			)
+			// 토탈 구매 금액에 대한 추가 배열
 			let cartArrayTotal = new Array (
-
+			)
+			// 구매 토탈 배열 구매리스트 + 최종 합계금액
+			let buyArray = new Array (
 			)
 		
 			// 반복문을 통해 전체 배열 출력
@@ -159,13 +163,16 @@
 
 			_carBt.addEventListener('click', function(){
 
+				console.log("장바구니에 담긴 배열")
+				console.log(cartArray)
+
 				document.getElementById('cartWrap').style.display = 'block';
 				
 				cartListItemTotalval = cartArray.reduce((prev, curr) => {
 					return (prev += curr.amount)
 				}, 0)
 
-				cartArrayTotal = {totalPrice : cartListItemTotalval}
+				cartArrayTotal.push({totalPrice : cartListItemTotalval})
 				
 				let cartListItemWrap = document.getElementById('cartlistWrap')		
 				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
@@ -189,13 +196,16 @@
 				cartListItemWrap.innerHTML = __HTML
 				cartListItemTotalWrap.innerHTML += '<tr>' + '<td class="total" colspan="2">' + "전체 구매 금액" + '</td>' + '<td id="totalPriceval" class="total" colspan="2" date-total= '+cartListItemTotalval+'>' + cartListItemTotalval + '</td>' + '</tr>'
 										
+				console.log("장바구니에 담긴 전체 합산금액")
+				console.log(cartListItemTotalval)
 			})
 
 			
 			document.getElementById('buyBt').addEventListener('click', function(){
+				console.log("현재내가 로컬스토리지에 가지고있는포인트")
 				console.log(localStorage.totalPrice)
 				let buyconfirm = confirm("구매를 확정하시겠습니까?")
-				
+
 				if(buyconfirm == true){
 
 					localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
@@ -203,17 +213,19 @@
 					alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
 					document.getElementById('cartWrap').style.display = 'none';
 					document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
-					document.querySelectorAll('.active').checked = false;
+					buyArray.push(cartArray, cartArrayTotal)
+					console.log("최종구매 배열")
+					console.log(buyArray)
 
 				}return false
 
 			})
 
+
 		}
 
 		function cartWrapClose() {
-				
-				document.getElementById('cartWrap').style.display = 'none';
+			document.getElementById('cartWrap').style.display = 'none';
 		}
 			
 
