@@ -8,26 +8,19 @@
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/reset.css">
 	<script type="text/javascript">
 
-		
+		localStorage.setItem('totalPrice', 300000)
+		localStorage.setItem('name', "BJH")
 
-		if( !localStorage.getItem('totalPrice') ){
-			localStorage.setItem('totalPrice', 5000)
-
-		}
 		window.onload = function() {
 			
+			let _localPoint = document.getElementById('price').innerHTML += localStorage.getItem('totalPrice')
 
-			document.getElementById('price').addEventListener('click', function(){
-				localStorage.setItem('totalPrice', 3000)
-
-			})
 
 			let _cartlisWrap = document.getElementById('itemList')
 			let chklist = document.getElementById('itemListWrap')
 			let cart_view = document.getElementById('cartlistWrap')
 			let _HTML = ''
 			let __HTML = ''
-			let ___HTML = ''
 			
 
 			let martitem = new Array(
@@ -35,8 +28,13 @@
 				{name:'딸기', price: 2000},
 				{name:'사과', price: 3000},
 				{name:'오렌지', price: 4000},
+				{name:'수박', price: 12000},
+				{name:'키위', price: 5000},
 			)
 			let cartArray = new Array(
+			)
+			let cartArrayTotal = new Array (
+
 			)
 		
 			// 반복문을 통해 전체 배열 출력
@@ -48,6 +46,7 @@
 				_HTML += '</li>';
 				
 			}
+
 			
 			//innerHTML을 통해 생성
 			_cartlisWrap.innerHTML = _HTML
@@ -56,7 +55,7 @@
 			let _carBt = document.getElementById('cartbt')
 			let _count = document.getElementsByClassName('.counts')
 			
-
+			
 			for( var i=0; _martItem.length > i; i++ ){
 
 				let _cheked = _martItem[i].querySelector('.name')
@@ -74,11 +73,14 @@
 					if(_target.checked){
 						
 						cartArray.push({name : _target_name, price : _target_data, count : 1, amount :_target_data * 1})
-						
-						
+												
 						_target_count.value = 1 //카운트인풋1
 
+						_target.classList.add('active')
+
 						_target_count.removeAttribute('disabled') //카운트disabled삭제
+
+						_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
 					
 						_target_count.addEventListener('change', function(event){
 							
@@ -97,26 +99,27 @@
 								
 								_target.checked  = false;
 								_target_count.setAttribute('disabled', 'disabled')
+								_target.classList.remove('active')
+
+								if(_checkdAll.length == 0) {
+
+								_carBt.setAttribute('disabled', 'disabled')
+									
+								} return false
 
 
 							}else{
 								cartArray[cartArray_find].count = _target_count.value
 								cartArray[cartArray_find].amount = _target_count.value * _target_data
+								_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
 							
-								console.log(cartArray)
 							}
 									 												
-						})																
-							
-						if( _checkdAll.length == 0 ){
-							_carBt.setAttribute('disabled', 'disabled')
-
-						}else{
-							_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
-
-						}
+						})	
 		
 					}else{
+
+						_target.classList.remove('active')
 
 						let cartArray_find = cartArray.findIndex(function(find) {
 
@@ -125,7 +128,7 @@
 							}
 
 							return false;
-							
+													
 						});
 											
 						cartArray.splice(cartArray_find, 1)
@@ -142,26 +145,63 @@
 						_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
 
 						}
-					}
-																	
+					}																		
 				})
-				
 			}
+
 			_carBt.addEventListener('click', function(){
 
-																			
+				document.getElementById('cartWrap').style.display = 'block';
+				
+				cartListItemTotalval = cartArray.reduce((prev, curr) => {
+					return (prev += curr.amount)
+				}, 0)
+
+				cartArrayTotal = {totalPrice : cartListItemTotalval}
+				
+				let cartListItemWrap = document.getElementById('cartlistWrap')		
+				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
+				let cartList = document.getElementsByClassName('cartListItem')
+				let totalPrice = document.getElementById('totalPriceval')
+
+				__HTML = ""
+				cartListItemTotalWrap.innerHTML = ""
+					
+				for(let i=0; i < cartArray.length; i++){
+					
+					__HTML += '<tr class="cartListItem">'
+						__HTML += '<td>' + cartArray[i].name + '</td>'
+						__HTML += '<td>' + cartArray[i].price + '</td>'
+						__HTML += '<td>' + cartArray[i].count + '</td>'
+						__HTML += '<td>' + cartArray[i].amount + '</td>'
+					__HTML += '</tr>' 
+										
+				}
+													
+				cartListItemWrap.innerHTML = __HTML
+				cartListItemTotalWrap.innerHTML += '<tr>' + '<td class="total" colspan="2">' + "전체 구매 금액" + '</td>' + '<td id="totalPriceval" class="total" colspan="2" date-total= '+cartListItemTotalval+'>' + cartListItemTotalval + '</td>' + '</tr>'
+										
 			})
 
 			
-		}
-		
+			document.getElementById('buyBt').addEventListener('click', function(){
+				alert(localStorage.getItem('totalPrice') - cartListItemTotalval + "잔액이 남게됩니다") 
 
+			})
+
+		}
+
+		function cartWrapClose() {
+				
+				document.getElementById('cartWrap').style.display = 'none';
+		}
+			
 
 	</script>
 </head>
 <body>
 	<div id="container">
-		<button type="button" id="price">5000</button>
+		<button type="button" id="price"></button>
 		<h1>Cart 만들기</h1>
 
 		<div id="itemWrap">
@@ -171,7 +211,7 @@
 		</div>
 		<button id="cartbt" disabled >장바구니 담기</button>
 		<div id="cartWrap">
-			<table id="carttable">
+			<table id="cartTable">
 				<thead>
 					<tr>
 						<td>품목</td>
@@ -182,7 +222,11 @@
 				</thead>
 				<tbody id="cartlistWrap">
 				</tbody>
+				<tfoot id="cartTotalWrap">
+				</tfoot>
 			</table>
+			<button id="buyBt">구매하기</button>
+			<button id="closeBt" onclick="cartWrapClose();">다시담기</button>
 		</div>
 	</div>
 

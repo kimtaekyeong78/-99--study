@@ -37,33 +37,94 @@
     }
     
     #cartWrap {
-        left: 550px;
-        display: block;
-        width: 800px;
-        height: 600px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
         margin: 0 auto;
+        background: #c9c6c6;
+        text-align: center;
 
-        > ul {
+        #cartTable {
+            width: 80%;
+            margin: 50px auto;
+            border: 1px solid #333;
 
-            > li {
+            > thead {
+                background: #000;
+                
+                > tr {
+                    font-size: 18px;
+                    font-weight: 700;
 
-                .cartitem {
-                    display: inline-block;
-                    font-size: 20px;
-                    font-weight: 600;
-                    margin: 0px 10px
+                    > td {
+                        padding: 10px;
+                        border: 1px solid rgb(123, 121, 121);
+                        text-align: center;
+                        color: #fff;
+                    }
                 }
+            }
 
-                > span {
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: #ff0000;
+            > tbody {
+                background: #4e4e4e;
+
+                > tr {
+                    border-bottom: 3px solid #fff ;
+
+                    > td { 
+                        padding: 10px;
+                        border: 1px solid rgb(123, 121, 121);
+                        font-size: 18px;
+                        color: #fff;
+                        text-align: center;
+                    }
                 }
+            }
 
+            > tfoot {
+                
+                > tr {
+                    
+
+                    .total {
+                        padding: 10px;
+                        border: 1px solid rgb(123, 121, 121);
+                        background: #000;
+                        text-align: center;
+                        border: 1px solid rgb(123, 121, 121);
+                        font-size: 28px;
+                        color: #fff;
+                    }
+
+                }
             }
         }
 
-
+        #buyBt {
+            margin-top: 30px;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #fff;
+            background: #4e4e4e;
+            border: 1px solid #fff;
+            cursor: pointer;
+        }
+        #closeBt {
+            margin-top: 30px;
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #fff;
+            background: #4e4e4e;
+            border: 1px solid #fff;
+            cursor: pointer;
+        }
 
     }
 }
