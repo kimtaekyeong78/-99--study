@@ -15,6 +15,12 @@
 			
 			let _localPoint = document.getElementById('price').innerHTML += localStorage.getItem('totalPrice')
 
+			
+			document.getElementById('price').addEventListener('click', function(){
+				alert(localStorage.getItem('totalPrice') + "포인트를 소유하고 있습니다") 
+
+			})
+
 
 			let _cartlisWrap = document.getElementById('itemList')
 			let chklist = document.getElementById('itemListWrap')
@@ -29,7 +35,10 @@
 				{name:'사과', price: 3000},
 				{name:'오렌지', price: 4000},
 				{name:'수박', price: 12000},
-				{name:'키위', price: 5000},
+				{name:'망고', price: 6000},
+				{name:'레몬', price: 3800},
+				{name:'포도', price: 8000},
+				{name:'석류', price: 5500},
 			)
 			let cartArray = new Array(
 			)
@@ -54,7 +63,6 @@
 			let _martItem = document.querySelectorAll('.item')
 			let _carBt = document.getElementById('cartbt')
 			let _count = document.getElementsByClassName('.counts')
-			
 			
 			for( var i=0; _martItem.length > i; i++ ){
 
@@ -185,7 +193,19 @@
 
 			
 			document.getElementById('buyBt').addEventListener('click', function(){
-				alert(localStorage.getItem('totalPrice') - cartListItemTotalval + "잔액이 남게됩니다") 
+				console.log(localStorage.totalPrice)
+				let buyconfirm = confirm("구매를 확정하시겠습니까?")
+				
+				if(buyconfirm == true){
+
+					localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
+
+					alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
+					document.getElementById('cartWrap').style.display = 'none';
+					document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
+					document.querySelectorAll('.active').checked = false;
+
+				}return false
 
 			})
 
@@ -201,7 +221,10 @@
 </head>
 <body>
 	<div id="container">
-		<button type="button" id="price"></button>
+		<div id="utilWrap">
+			<span>현재 나의 포인트</span>
+			<button type="button" id="price"></button>
+		</div>
 		<h1>Cart 만들기</h1>
 
 		<div id="itemWrap">
@@ -211,6 +234,7 @@
 		</div>
 		<button id="cartbt" disabled >장바구니 담기</button>
 		<div id="cartWrap">
+			<h1>장바구니 리스트</h1>
 			<table id="cartTable">
 				<thead>
 					<tr>

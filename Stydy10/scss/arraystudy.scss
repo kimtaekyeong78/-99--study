@@ -47,6 +47,12 @@
         background: #c9c6c6;
         text-align: center;
 
+        > h1 {
+            margin-top: 50px;
+            font-size: 34px;
+            font-weight: 600;
+        }
+
         #cartTable {
             width: 80%;
             margin: 50px auto;
