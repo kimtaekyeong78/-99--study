@@ -21,14 +21,13 @@
 
 			})
 
-
 			let _cartlisWrap = document.getElementById('itemList')
 			let chklist = document.getElementById('itemListWrap')
 			let cart_view = document.getElementById('cartlistWrap')
 			let _HTML = ''
 			let __HTML = ''
-			
 
+			//제품 배열
 			let martitem = new Array(
 				{name:'바나나', price: 1000},
 				{name:'딸기', price: 2000},
@@ -81,7 +80,7 @@
 					let _target_this = this.checked
 					let _checkdAll = document.getElementsByClassName('active')
 					
-					
+					// 제품의 체크박스가 체크 되었을때
 					if(_target.checked){
 						
 						cartArray.push({name : _target_name, price : _target_data, count : 1, amount :_target_data * 1})
@@ -94,8 +93,10 @@
 
 						_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
 					
+						//넘버박스 카운트 숫자 변경에 따른 이벤트 생성
 						_target_count.addEventListener('change', function(event){
 							
+							//해당 제품의 체크박스와 동일한 넘버박스 인덱스 찾기
 							let cartArray_find = cartArray.findIndex(function(find) {
 
 								if(find.name === _target_name) {
@@ -106,29 +107,32 @@
 								
 							});
 							
-							if( _target_count.value  < 1 ) { //수량이 0이면, 
+							//해당 타켓의 카운트 숫자가 0일때 조건식
+							if( _target_count.value  < 1 ) { 
 								cartArray.splice(cartArray_find, 1)
 								
 								_target.checked  = false;
 								_target_count.setAttribute('disabled', 'disabled')
 								_target.classList.remove('active')
 
+								//넘버를 0으로 했는데, 체크된것도 0이면 생기는 조건
 								if(_checkdAll.length == 0) {
 
 								_carBt.setAttribute('disabled', 'disabled')
 									
 								} return false
-
-
+							
+							//카운트 넘버가 1이상이때면 해당 조건식 발생
 							}else{
 								cartArray[cartArray_find].count = _target_count.value
 								cartArray[cartArray_find].amount = _target_count.value * _target_data
-								_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
+								_carBt.removeAttribute('disabled')
 							
 							}
 									 												
 						})	
-		
+
+					//체크박스를 해제 될때,
 					}else{
 
 						_target.classList.remove('active')
@@ -161,6 +165,7 @@
 				})
 			}
 
+			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성
 			_carBt.addEventListener('click', function(){
 
 				console.log("장바구니에 담긴 배열")
@@ -168,6 +173,7 @@
 
 				document.getElementById('cartWrap').style.display = 'block';
 				
+				//선택된 제품 배열에서 토탈 합산을 구하기
 				cartListItemTotalval = cartArray.reduce((prev, curr) => {
 					return (prev += curr.amount)
 				}, 0)
@@ -199,7 +205,6 @@
 				console.log("장바구니에 담긴 전체 합산금액")
 				console.log(cartListItemTotalval)
 			})
-
 			
 			document.getElementById('buyBt').addEventListener('click', function(){
 				console.log("현재내가 로컬스토리지에 가지고있는포인트")
