@@ -6,6 +6,7 @@
 	<title>Study10</title>
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/arraystudy.css">
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/reset.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 
 		localStorage.setItem('totalPrice', 300000)
@@ -16,27 +17,18 @@
 			
 			let _localPoint = document.getElementById('price').innerHTML += localStorage.getItem('totalPrice')
 
-			
 			_f_initPriceButton()
 			
-			const _cartlisWrap = document.getElementById('itemList')
+			
 			const chklist = document.getElementById('itemListWrap')
 			const cart_view = document.getElementById('cartlistWrap')
-			let _HTML = ''
 			let __HTML = ''
 
 			//제품 배열
-			let martitem = new Array(
-				{name:'바나나', price: 1000},
-				{name:'딸기', price: 2000},
-				{name:'사과', price: 3000},
-				{name:'오렌지', price: 4000},
-				{name:'수박', price: 12000},
-				{name:'망고', price: 6000},
-				{name:'레몬', price: 3800},
-				{name:'포도', price: 8000},
-				{name:'석류', price: 5500},
-			)
+			let martitem = []
+
+			_f_initAjaxList(martitem)
+
 			// 카드에 담은 리스트 배열
 			let cartArray = new Array(
 			)
@@ -46,20 +38,9 @@
 			// 구매 토탈 배열 구매리스트 + 최종 합계금액
 			let buyArray = new Array (
 			)
-		
-			// 반복문을 통해 전체 배열 출력
-			for(let i=0; i < martitem.length; i++ ){
-				_HTML += '<li class="item">';
-					_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ martitem[i].price +'" name="mart" value="'+martitem[i].name+'" />';
-					_HTML += '<label for="martitemlist'+(i+1)+'">'+martitem[i].name+'</label>';
-					_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
-				_HTML += '</li>';
-				
-			}
-
 			
-			//innerHTML을 통해 생성
-			_cartlisWrap.innerHTML = _HTML
+			
+			
 
 			const _martItem = document.querySelectorAll('.item')
 			const _carBt = document.getElementById('cartbt')
@@ -205,6 +186,52 @@
 			})
 		}
 
+		function _f_initAjaxList(arr){
+			
+			//innerHTML을 통해 생성
+			const _cartlisWrap = document.getElementById('itemList')
+			
+			const _HTML = ''
+
+			try{
+				$.ajax({
+					url: `http://127.0.0.1:5500/Stydy10/api/mart.json`,
+					method: 'GET',
+					async: true,
+					dataType: 'json',
+					success : function (response) {
+					
+						arr = response;
+												
+						// 반복문을 통해 전체 배열 출력
+						for(let i=0; i < arr.length; i++ ){
+							console.log(arr[i].price)
+
+							// _HTML += "<li class='item'>"+ arr[i].price +"</li>"
+
+							// _HTML += '<li class="item">';
+							// 	_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ arr[i].price +'" name="mart" value="'+martitem[i].name+'" />';
+							// 	_HTML += '<label for="martitemlist'+(i+1)+'">'+arr[i].name+'</label>';
+							// 	_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
+							// _HTML += '</li>';
+						}
+						 
+
+					   console.log(_HTML)
+					},
+					error: function (xhr) {
+						alert(xhr)
+					}
+					
+				});
+			}
+			catch(e){
+				//AJAX 로드 실패
+				alert(e)
+			}
+		}	
+
+
 		//장바구니 담기 버튼
 		/**
 		 * @param {String} el		대상버튼
@@ -293,6 +320,10 @@
 			<button id="buyBt">구매하기</button>
 			<button id="closeBt" onclick="cartWrapClose();">다시담기</button>
 		</div>
+	</div>
+
+	<div id="arrjson">
+
 	</div>
 
 
