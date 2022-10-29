@@ -11,19 +11,17 @@
 		localStorage.setItem('totalPrice', 300000)
 		localStorage.setItem('name', "BJH")
 
+
 		window.onload = function() {
 			
 			let _localPoint = document.getElementById('price').innerHTML += localStorage.getItem('totalPrice')
 
 			
-			document.getElementById('price').addEventListener('click', function(){
-				alert(localStorage.getItem('totalPrice') + "포인트를 소유하고 있습니다") 
-
-			})
-
-			let _cartlisWrap = document.getElementById('itemList')
-			let chklist = document.getElementById('itemListWrap')
-			let cart_view = document.getElementById('cartlistWrap')
+			_f_initPriceButton()
+			
+			const _cartlisWrap = document.getElementById('itemList')
+			const chklist = document.getElementById('itemListWrap')
+			const cart_view = document.getElementById('cartlistWrap')
 			let _HTML = ''
 			let __HTML = ''
 
@@ -63,9 +61,12 @@
 			//innerHTML을 통해 생성
 			_cartlisWrap.innerHTML = _HTML
 
-			let _martItem = document.querySelectorAll('.item')
-			let _carBt = document.getElementById('cartbt')
-			let _count = document.getElementsByClassName('.counts')
+			const _martItem = document.querySelectorAll('.item')
+			const _carBt = document.getElementById('cartbt')
+			const _count = document.getElementsByClassName('.counts')
+			
+			_f_initWishListButton(_carBt, cartArray, cartArrayTotal)
+
 			
 			for( var i=0; _martItem.length > i; i++ ){
 
@@ -155,6 +156,7 @@
 						if( _checkdAll.length == 0 ){
 
 						_carBt.setAttribute('disabled', 'disabled')
+						
 
 						}else{
 
@@ -164,48 +166,8 @@
 					}																		
 				})
 			}
-
-			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성
-			_carBt.addEventListener('click', function(){
-
-				console.log("장바구니에 담긴 배열")
-				console.log(cartArray)
-
-				document.getElementById('cartWrap').style.display = 'block';
-				
-				//선택된 제품 배열에서 토탈 합산을 구하기
-				cartListItemTotalval = cartArray.reduce((prev, curr) => {
-					return (prev += curr.amount)
-				}, 0)
-
-				cartArrayTotal.push({totalPrice : cartListItemTotalval})
-				
-				let cartListItemWrap = document.getElementById('cartlistWrap')		
-				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
-				let cartList = document.getElementsByClassName('cartListItem')
-				let totalPrice = document.getElementById('totalPriceval')
-
-				__HTML = ""
-				cartListItemTotalWrap.innerHTML = ""
-					
-				for(let i=0; i < cartArray.length; i++){
-					
-					__HTML += '<tr class="cartListItem">'
-						__HTML += '<td>' + cartArray[i].name + '</td>'
-						__HTML += '<td>' + cartArray[i].price + '</td>'
-						__HTML += '<td>' + cartArray[i].count + '</td>'
-						__HTML += '<td>' + cartArray[i].amount + '</td>'
-					__HTML += '</tr>' 
-										
-				}
-													
-				cartListItemWrap.innerHTML = __HTML
-				cartListItemTotalWrap.innerHTML += '<tr>' + '<td class="total" colspan="2">' + "전체 구매 금액" + '</td>' + '<td id="totalPriceval" class="total" colspan="2" date-total= '+cartListItemTotalval+'>' + cartListItemTotalval + '</td>' + '</tr>'
-										
-				console.log("장바구니에 담긴 전체 합산금액")
-				console.log(cartListItemTotalval)
-			})
 			
+			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성
 			document.getElementById('buyBt').addEventListener('click', function(){
 				console.log("현재내가 로컬스토리지에 가지고있는포인트")
 				console.log(localStorage.totalPrice)
@@ -232,6 +194,68 @@
 		function cartWrapClose() {
 			document.getElementById('cartWrap').style.display = 'none';
 		}
+
+		//초기 포인트 알림
+		function _f_initPriceButton(){
+
+		
+			document.getElementById('price').addEventListener('click', 	function(){
+				alert(localStorage.getItem('totalPrice') + "포인트를 소유하고 있습니다") 
+
+			})
+		}
+
+		//장바구니 담기 버튼
+		/**
+		 * @param {String} el		대상버튼
+		 * @param {Arrary} arr		장바구니 배열
+		 * @param {Arrary} total	전체가격포함 배열
+		 * 
+		*/
+		function _f_initWishListButton(el, arr, total){
+			
+			el.addEventListener('click', function(){
+
+				console.log("장바구니에 담긴 배열")
+				console.log(arr)
+				
+				document.getElementById('cartWrap').style.display = 'block';
+
+				//선택된 제품 배열에서 토탈 합산을 구하기
+				cartListItemTotalval = arr.reduce((prev, curr) => {
+					return (prev += curr.amount)
+				}, 0)
+
+				total.push({totalPrice : cartListItemTotalval})
+
+				let cartListItemWrap = document.getElementById('cartlistWrap')		
+				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
+				let cartList = document.getElementsByClassName('cartListItem')
+				let totalPrice = document.getElementById('totalPriceval')
+
+				__HTML = ""
+				cartListItemTotalWrap.innerHTML = ""
+					
+				for(let i=0; i < arr.length; i++){
+					
+					__HTML += '<tr class="cartListItem">'
+						__HTML += '<td>' + arr[i].name + '</td>'
+						__HTML += '<td>' + arr[i].price + '</td>'
+						__HTML += '<td>' + arr[i].count + '</td>'
+						__HTML += '<td>' + arr[i].amount + '</td>'
+					__HTML += '</tr>' 
+										
+				}
+													
+				cartListItemWrap.innerHTML = __HTML
+				cartListItemTotalWrap.innerHTML += '<tr>' + '<td class="total" colspan="2">' + "전체 구매 금액" + '</td>' + '<td id="totalPriceval" class="total" colspan="2" date-total= '+cartListItemTotalval+'>' + cartListItemTotalval + '</td>' + '</tr>'
+										
+				console.log("장바구니에 담긴 전체 합산금액")
+				console.log(cartListItemTotalval)
+			})
+		}
+
+		
 			
 
 	</script>
