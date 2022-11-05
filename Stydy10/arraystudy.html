@@ -6,29 +6,51 @@
 	<title>Study10</title>
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/arraystudy.css">
 	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 
-		localStorage.setItem('totalPrice', 300000)
-		localStorage.setItem('name', "BJH")
+		// localStorage.setItem('totalPrice', 300000)
+		// localStorage.setItem('name', "BJH")
+
 
 
 		window.onload = function() {
 			
-			let _localPoint = document.getElementById('price').innerHTML += localStorage.getItem('totalPrice')
+			// _f_initPriceButton() - 다시 작업 해야됨 
 
-			_f_initPriceButton()
-			
+
 			
 			const chklist = document.getElementById('itemListWrap')
 			const cart_view = document.getElementById('cartlistWrap')
-			let __HTML = ''
 
 			//제품 배열
 			let martitem = []
+			let members = ""
 
-			_f_initAjaxList(martitem)
+			// fetch("api/mart.json").then(function(response){
 
+			// 	return response.json()
+			// }).then(function(data){
+
+			// 	return data.memberinfo
+			// }).then(function(data){
+			// 	console.log(data);
+			// })
+
+
+			_f_login(members)
+			_f_initAjaxList(martitem, members)
+
+			
+			const _martItem = document.querySelectorAll('.item')
+			const _carBt = document.getElementById('cartbt')
+			const _count = document.getElementsByClassName('.counts')
+			
+			
+			// 로그인 회원 정보 불러오기
+			let loginMember = new Array(
+			)
 			// 카드에 담은 리스트 배열
 			let cartArray = new Array(
 			)
@@ -38,186 +60,124 @@
 			// 구매 토탈 배열 구매리스트 + 최종 합계금액
 			let buyArray = new Array (
 			)
+
+
+			_f_pagenation(_martItem)
+			
+
+			_f_initWishListButton(_carBt, cartArray, cartArrayTotal, cart_view, _martItem)
+
 			
 			
-			
+			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성 - 배열로 가지고와서 다시 작업 해야함
+			// document.getElementById('buyBt').addEventListener('click', function(){
+			// 	console.log("현재내가 가지고있는포인트")
+			// 	console.log(localStorage.totalPrice)
+			// 	let buyconfirm = confirm("구매를 확정하시겠습니까?")
 
-			const _martItem = document.querySelectorAll('.item')
-			const _carBt = document.getElementById('cartbt')
-			const _count = document.getElementsByClassName('.counts')
-			
-			_f_initWishListButton(_carBt, cartArray, cartArrayTotal)
+			// 	if(buyconfirm == true){
 
-			
-			for( var i=0; _martItem.length > i; i++ ){
+			// 		localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
 
-				let _cheked = _martItem[i].querySelector('.name')
-				
-				_cheked.addEventListener('change', function(event){
+			// 		alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
+			// 		document.getElementById('cartWrap').style.display = 'none';
+			// 		document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
+			// 		buyArray.push(cartArray, cartArrayTotal)
+			// 		console.log("최종구매 배열")
+			// 		console.log(buyArray)
 
-					let _target = event.currentTarget
-					let _target_data = _target.dataset.price; // 해당 타켓의 가격
-					let _target_name = _target.value; // 해당 타켓의 이름 == 값
-					let _target_count = _target.parentNode.querySelector('.counts')	//클릭된 리스트의 개수 인풋박스
-					let _target_this = this.checked
-					let _checkdAll = document.getElementsByClassName('active')
-					
-					// 제품의 체크박스가 체크 되었을때
-					if(_target.checked){
-						
-						cartArray.push({name : _target_name, price : _target_data, count : 1, amount :_target_data * 1})
-												
-						_target_count.value = 1 //카운트인풋1
+			// 	}return false
 
-						_target.classList.add('active')
-
-						_target_count.removeAttribute('disabled') //카운트disabled삭제
-
-						_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
-					
-						//넘버박스 카운트 숫자 변경에 따른 이벤트 생성
-						_target_count.addEventListener('change', function(event){
-							
-							//해당 제품의 체크박스와 동일한 넘버박스 인덱스 찾기
-							let cartArray_find = cartArray.findIndex(function(find) {
-
-								if(find.name === _target_name) {
-									return true;
-								}
-
-								return false;
-								
-							});
-							
-							//해당 타켓의 카운트 숫자가 0일때 조건식
-							if( _target_count.value  < 1 ) { 
-								cartArray.splice(cartArray_find, 1)
-								
-								_target.checked  = false;
-								_target_count.setAttribute('disabled', 'disabled')
-								_target.classList.remove('active')
-
-								//넘버를 0으로 했는데, 체크된것도 0이면 생기는 조건
-								if(_checkdAll.length == 0) {
-
-								_carBt.setAttribute('disabled', 'disabled')
-									
-								} return false
-							
-							//카운트 넘버가 1이상이때면 해당 조건식 발생
-							}else{
-								cartArray[cartArray_find].count = _target_count.value
-								cartArray[cartArray_find].amount = _target_count.value * _target_data
-								_carBt.removeAttribute('disabled')
-							
-							}
-									 												
-						})	
-
-					//체크박스를 해제 될때,
-					}else{
-
-						_target.classList.remove('active')
-
-						let cartArray_find = cartArray.findIndex(function(find) {
-
-							if(find.name === _target_name) {
-								return true;
-							}
-
-							return false;
-													
-						});
-											
-						cartArray.splice(cartArray_find, 1)
-						
-						_target_count.setAttribute('disabled', 'disabled')
-						_target_count.value = 0
-
-						if( _checkdAll.length == 0 ){
-
-						_carBt.setAttribute('disabled', 'disabled')
-						
-
-						}else{
-
-						_carBt.removeAttribute('disabled') //장바구니버튼disabled삭제
-
-						}
-					}																		
-				})
-			}
-			
-			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성
-			document.getElementById('buyBt').addEventListener('click', function(){
-				console.log("현재내가 로컬스토리지에 가지고있는포인트")
-				console.log(localStorage.totalPrice)
-				let buyconfirm = confirm("구매를 확정하시겠습니까?")
-
-				if(buyconfirm == true){
-
-					localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
-
-					alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
-					document.getElementById('cartWrap').style.display = 'none';
-					document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
-					buyArray.push(cartArray, cartArrayTotal)
-					console.log("최종구매 배열")
-					console.log(buyArray)
-
-				}return false
-
-			})
+			// })
 
 
 		}
 
-		function cartWrapClose() {
-			document.getElementById('cartWrap').style.display = 'none';
-		}
+
 
 		//초기 포인트 알림
-		function _f_initPriceButton(){
+		// function _f_initPriceButton(){
 
 		
-			document.getElementById('price').addEventListener('click', 	function(){
-				alert(localStorage.getItem('totalPrice') + "포인트를 소유하고 있습니다") 
+		// 	document.getElementById('price').addEventListener('click', 	function(){
+		// 		alert(localStorage.getItem('totalPrice') + "포인트를 소유하고 있습니다") 
 
-			})
-		}
+		// 	})
+		// }
 
-		function _f_initAjaxList(arr){
+
+		// function _f_initAjaxList(arr){
 			
+		// 	//innerHTML을 통해 생성
+		// 	const _cartlisWrap = document.getElementById('itemList')
+			
+		// 	let _HTML = ''
+
+		// 	fetch("api/mart.json")
+		// 	.then((response) => response.json())
+		// 	.then((data) => {			
+					
+		// 		member = data.memberinfo;
+		// 		arr = data.product;
+		// 		console.log(arr)
+		// 		console.log(member)
+		// 		arr.sort((a,b)=>a.price - b.price)
+										
+		// 		// 반복문을 통해 전체 배열 출력
+		// 		for(let i=0; i < arr.length;  i++ ){
+												
+		// 			_HTML += '<li class="item">';
+		// 				_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ arr[i].price +'" name="mart" value="'+arr[i].name+'" />';
+		// 				_HTML += '<label for="martitemlist'+(i+1)+'">'+arr[i].name+'</label>';
+		// 				_HTML += "<span>"+ arr[i].price + "원" + "</span>"
+		// 				_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
+		// 			_HTML += '</li>';
+		// 		}
+		// 		_cartlisWrap.innerHTML = _HTML
+				   
+		// 	})
+
+		// }
+
+
+
+		function _f_initAjaxList(arr, member){
+
+
 			//innerHTML을 통해 생성
 			const _cartlisWrap = document.getElementById('itemList')
 			
-			const _HTML = ''
+			let _HTML = ''
 
 			try{
 				$.ajax({
 					url: `http://127.0.0.1:5500/Stydy10/api/mart.json`,
 					method: 'GET',
-					async: true,
+					async: false,
 					dataType: 'json',
 					success : function (response) {
-					
-						arr = response;
+						
+						member = response.memberinfo;
+						arr = response.product;
+						console.log(arr)
+						console.log(member)
+						arr.sort((a,b)=>a.price - b.price)
+						
 												
 						// 반복문을 통해 전체 배열 출력
-						for(let i=0; i < arr.length; i++ ){
-							console.log(arr[i].price)
-
-							// _HTML += "<li class='item'>"+ arr[i].price +"</li>"
-
-							// _HTML += '<li class="item">';
-							// 	_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ arr[i].price +'" name="mart" value="'+martitem[i].name+'" />';
-							// 	_HTML += '<label for="martitemlist'+(i+1)+'">'+arr[i].name+'</label>';
-							// 	_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
-							// _HTML += '</li>';
+						for(let i=0; i < arr.length;  i++ ){
+														
+							_HTML += '<li class="item">';
+								_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ arr[i].price +'" name="mart" value="'+arr[i].name+'" />';
+								_HTML += '<label for="martitemlist'+(i+1)+'">'+arr[i].name+'</label>';
+								_HTML += "<span>"+ arr[i].price + "원" + "</span>"
+								_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
+							_HTML += '</li>';
 						}
-						 
-
-					   console.log(_HTML)
+					   _cartlisWrap.innerHTML = _HTML
+						console.log(member.push(member))
+						console.log(member)
+				   
 					},
 					error: function (xhr) {
 						alert(xhr)
@@ -230,23 +190,27 @@
 				alert(e)
 			}
 		}	
-
-
+		
 		//장바구니 담기 버튼
 		/**
-		 * @param {String} el		대상버튼
-		 * @param {Arrary} arr		장바구니 배열
-		 * @param {Arrary} total	전체가격포함 배열
+		 * @param {String} el			대상버튼
+		 * @param {Arrary} arr			장바구니 제품 배열
+		 * @param {Arrary} total		전체가격포함 배열
+		 * @param {String} product		생성된 제품 리스트
 		 * 
 		*/
-		function _f_initWishListButton(el, arr, total){
-			
+
+		function _f_initWishListButton(el, arr, total, cartlsit, product){
+
+			const wishListWrap = document.getElementById('cartWrap')
+			const wishListWrapClose = document.getElementById('closeBt')
+						
 			el.addEventListener('click', function(){
 
 				console.log("장바구니에 담긴 배열")
 				console.log(arr)
 				
-				document.getElementById('cartWrap').style.display = 'block';
+				wishListWrap.style.display = 'block';
 
 				//선택된 제품 배열에서 토탈 합산을 구하기
 				cartListItemTotalval = arr.reduce((prev, curr) => {
@@ -254,8 +218,7 @@
 				}, 0)
 
 				total.push({totalPrice : cartListItemTotalval})
-
-				let cartListItemWrap = document.getElementById('cartlistWrap')		
+	
 				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
 				let cartList = document.getElementsByClassName('cartListItem')
 				let totalPrice = document.getElementById('totalPriceval')
@@ -274,31 +237,329 @@
 										
 				}
 													
-				cartListItemWrap.innerHTML = __HTML
+				cartlsit.innerHTML = __HTML
 				cartListItemTotalWrap.innerHTML += '<tr>' + '<td class="total" colspan="2">' + "전체 구매 금액" + '</td>' + '<td id="totalPriceval" class="total" colspan="2" date-total= '+cartListItemTotalval+'>' + cartListItemTotalval + '</td>' + '</tr>'
 										
 				console.log("장바구니에 담긴 전체 합산금액")
 				console.log(cartListItemTotalval)
+
+				
+				wishListWrapClose.addEventListener('click', function(){
+					wishListWrap.style.display = 'none';
+				})
+
+			})
+
+
+			for( var i=0; product.length > i; i++ ){
+
+			let _cheked = product[i].querySelector('.name')
+
+				_cheked.addEventListener('change', function(event){
+
+					let _target = event.currentTarget
+					let _target_data = _target.dataset.price; // 해당 타켓의 가격
+					let _target_name = _target.value; // 해당 타켓의 이름 == 값
+					let _target_count = _target.parentNode.querySelector('.counts')	//클릭된 리스트의 개수 인풋박스
+					let _target_this = this.checked
+					let _checkdAll = document.getElementsByClassName('active')
+					
+					
+					// 제품의 체크박스가 체크 되었을때
+					if(_target.checked){
+						
+						arr.push({name : _target_name, price : _target_data, count : 1, amount :_target_data * 1})
+												
+						_target_count.value = 1 //카운트인풋1
+
+						_target.classList.add('active')
+
+						_target_count.removeAttribute('disabled') //카운트disabled삭제
+
+						el.removeAttribute('disabled') //장바구니버튼disabled삭제
+					
+						//넘버박스 카운트 숫자 변경에 따른 이벤트 생성
+						_target_count.addEventListener('change', function(event){
+							
+							//해당 제품의 체크박스와 동일한 넘버박스 인덱스 찾기
+							let arr_NumIndex = arr.findIndex(function(find) {
+
+								if(find.name === _target_name) {
+									return true;
+								}
+
+								return false;
+								
+							});
+							
+							//해당 타켓의 카운트 숫자가 0일때 조건식
+							if( _target_count.value  < 1 ) { 
+								arr.splice(arr_NumIndex, 1)
+								
+								_target.checked  = false;
+								_target_count.setAttribute('disabled', 'disabled')
+								_target.classList.remove('active')
+
+								//넘버를 0으로 했는데, 체크된것도 0이면 생기는 조건
+								if(_checkdAll.length == 0) {
+
+									el.setAttribute('disabled', 'disabled')
+									
+								} return false
+							
+							//카운트 넘버가 1이상이때면 해당 조건식 발생
+							}else{
+								arr[arr_NumIndex].count = _target_count.value
+								arr[arr_NumIndex].amount = _target_count.value * _target_data
+								el.removeAttribute('disabled')
+							
+							}
+																					
+						})	
+
+					//체크박스를 해제 될때,
+					}else{
+
+						_target.classList.remove('active')
+
+						let arr_NumIndex = arr.findIndex(function(find) {
+
+							if(find.name === _target_name) {
+								return true;
+							}
+
+							return false;
+													
+						});
+											
+						arr.splice(arr_NumIndex, 1)
+						
+						_target_count.setAttribute('disabled', 'disabled')
+						_target_count.value = 0
+
+						if( _checkdAll.length == 0 ){
+
+							el.setAttribute('disabled', 'disabled')
+						
+						}else{
+
+							el.removeAttribute('disabled') //장바구니버튼disabled삭제
+
+						}
+					}																		
+				})
+			}
+		}
+
+		// 페이지네이션 스크립트
+		function _f_pagenation(rows){
+			
+			const rowsPerPage = 5;
+			// rows = 생성된 제품리스트
+			const roewsCount = rows.length;
+			const pageCount = Math.ceil(roewsCount/rowsPerPage);
+			const numbers = document.querySelector('#pageNumbers');
+			//변수 추가
+			const prevPageBtn = document.querySelector('#pagenation .fa-arrow-left')
+			const nextPageBtn = document.querySelector('#pagenation .fa-arrow-right')
+			let pageActiveIdx = 0; //현재보고 있는 페이지그룹 번호
+			let currentPageNum = 0; //현재 보고 있는 페이지네이션 번호
+			let maxPageNum = 3; //페이지그룹 최대 개수
+
+			//페이지네이션 생성
+			/*
+			대상.innerHTML = <li><a href="">1<a/></li>
+				for(초기값;조건;증감){
+					
+				}
+			*/
+
+			for(let i = 1; i <= pageCount; i++){
+				numbers.innerHTML += `<li><a href="">${i}</a></li>`;
+			}
+
+			const numberBtn = numbers.querySelectorAll('li');
+
+			//페이지네이션 번호 감추기
+			for(nb of numberBtn){
+					nb.style.display = 'none';
+			}
+			
+			numberBtn.forEach((item,idx)=>{
+				item.addEventListener('click', (e)=>{
+					e.preventDefault();
+
+					//테이블 출력 함수
+					displayRow(idx);
+				})
+			})
+
+			function displayRow(idx){
+
+				let start = idx*rowsPerPage;
+				let end = start+rowsPerPage;
+				let rowsArray = [...rows];
+
+
+				for(ra of rowsArray){
+					ra.style.display = 'none';
+				}
+
+				let newRows = rowsArray.slice(start, end);
+				
+				for(nr of newRows){
+					nr.style.display = '';
+				}
+
+				for(let nb of numberBtn){
+						nb.classList.remove('active');
+					}
+					numberBtn[idx].classList.add('active');
+
+			}//displayRow
+			
+			displayRow(0)
+
+			//페이지네이션 그룹 표시 함수
+			
+			function dispalyPage(num){
+				
+				//페이지네이션 번호 감추기
+				for(nb of numberBtn){
+						nb.style.display = 'none';
+				}
+				let totalPageCount = Math.ceil(pageCount/maxPageNum); 
+
+				let pageArr = [...numberBtn];
+				let start = num*maxPageNum;
+				let end = start+maxPageNum;
+				let pageListArr = pageArr.slice(start, end);
+
+				for(let item of pageListArr){
+					item.style.display = 'block';
+				}
+				if(pageActiveIdx == 0){
+					prevPageBtn.style.display = 'none';
+				}else{
+					prevPageBtn.style.display = 'block';
+				}
+				
+				if(pageActiveIdx == totalPageCount-1){
+					nextPageBtn.style.display = 'none';
+				}else{
+					nextPageBtn.style.display = 'block';
+				}
+			}
+			dispalyPage(0);
+
+			nextPageBtn.addEventListener('click',() => {
+				
+				let nextPageNum = pageActiveIdx*maxPageNum+maxPageNum;
+				
+				displayRow(nextPageNum);
+				++pageActiveIdx;
+				dispalyPage(pageActiveIdx);
+
+			})
+
+			prevPageBtn.addEventListener('click',() => {
+				
+				let nextPageNum = pageActiveIdx*maxPageNum-maxPageNum;
+				
+				displayRow(nextPageNum);
+				--pageActiveIdx;
+				dispalyPage(pageActiveIdx);
+
+			})
+
+		}
+
+		//로그인 기능
+		function _f_login(member) {
+			
+			const loginArea = document.getElementById('loginWrap');
+			const cashArea = document.getElementById('pointArea')
+			const userid = document.getElementById('memberId');
+			const userpw = document.getElementById('memberPw');
+			const loginBtn = document.getElementById('loginBtn');
+			let _usercash = document.getElementById('price');
+
+			fetch("api/mart.json")
+			.then((response) => response.json())
+			.then((data) => {
+				
+				let user = data.memberinfo;
+				
+				member = [...user]
+				console.log(member)
+
+				loginBtn.addEventListener('click', function(){
+									
+					let useridx = user.findIndex(function(find) {
+						if(find.id === userid.value) {
+							return true;
+						}
+						return false;
+					});
+
+					if(useridx >= 0){
+
+						if( userid.value === user[useridx].id && userpw.value === user[useridx].password){
+							console.log("일치한다")
+							_usercash.innerHTML += member[useridx].cash
+							loginArea.style.display = 'none';
+							cashArea.style.display = 'inline-block';
+
+						}else{
+							alert("비밀번호를 확인해주세요")
+						}
+						
+					}else{
+						alert("아이디를 확인해주세요")
+					}	
+					 	
+				})
+				
 			})
 		}
 
-		
-			
 
 	</script>
 </head>
 <body>
 	<div id="container">
+
 		<div id="utilWrap">
-			<span>현재 나의 포인트</span>
-			<button type="button" id="price"></button>
+			<div id="pointArea">
+				<span>현재 나의 포인트</span>
+				<button type="button" id="price"></button>
+			</div>
+			<div id="loginWrap">
+				<label for="memberId">아이디</label>
+				<input id="memberId" type="text" name="userid" placeholder="아이디를 입력하세요" value="">
+				<label for="memberPw">비밀번호</label>
+				<input id="memberPw" type="password" name="password" placeholder="비밀번호를 입력하세요" value="">
+				<input id="loginBtn" type="button" value="로그인">
+			</div>
 		</div>
+
 		<h1>Cart 만들기</h1>
 
 		<div id="itemWrap">
 			<ul id="itemList">
 
 			</ul>
+		</div>
+		<div id="pagenation">
+			<i class="fa-sharp fa-solid fa-arrow-left"></i>
+			<ol id="pageNumbers">
+				<!-- <li><a class="active" href="">1</a></li>
+				<li><a href="">1</a></li>
+				<li><a href="">1</a></li>
+				<li><a href="">1</a></li>
+				<li><a href="">1</a></li> -->
+			</ol>   
+			<i class="fa-sharp fa-solid fa-arrow-right"></i>
 		</div>
 		<button id="cartbt" disabled >장바구니 담기</button>
 		<div id="cartWrap">
@@ -318,7 +579,7 @@
 				</tfoot>
 			</table>
 			<button id="buyBt">구매하기</button>
-			<button id="closeBt" onclick="cartWrapClose();">다시담기</button>
+			<button id="closeBt">다시담기</button>
 		</div>
 	</div>
 
@@ -329,6 +590,25 @@
 
 	
 <!-- <script type="text/javascript">
+
+
+자바스크립트 json 로컬 API 만들기
+
+1. 마이포인트 배열 추가
+
+2. 가격 정렬
+
+3. 페이징 or 더보기 버튼을통해 디폴트 10개 노출에서 더 노출 시키기
+
+4. 코드정리 = Fetch 사용 / 함수명을 패치로 쓰면 ajax에 대한 기능으로 알 수 있음.
+
+
+* ajax란 api란 REST API란 RESTful API란
+4가지 종류 알아오기
+
+
+axios
+> 굳이 현재 알 필요는 없음 / 뷰 or 리액트를 쓰는 경우 사용을 하게 됨.
 
 
 1. 장바구니 담기

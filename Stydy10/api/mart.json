@@ -1,4 +1,38 @@
-[
+
+{
+"memberinfo" : [
+{
+	"id" : "bjh",
+	"password" : "1234",
+	"name" : "방정훈",
+	"raring" : "vip",
+	"address" : "성남시 중원구 은행동",
+	"phonenumber" : "010-1234-1234",
+	"e-mail" : "ww5861@nate.com",
+	"cash" : 300000
+},
+{
+	"id" : "gilldong",
+	"password" : "1234",
+	"name" : "홍길동",
+	"raring" : "silver",
+	"address" : "서울시 강동구 천호동",
+	"phonenumber" : "010-1114-1233",
+	"e-mail" : "hong@nate.com",
+	"cash" : 48000
+},
+{
+	"id" : "amodog",
+	"password" : "1235555",
+	"name" : "아무개",
+	"raring" : "gold",
+	"address" : "경기도 광주시 양벌동",
+	"phonenumber" : "010-1224-1634",
+	"e-mail" : "dog@naver.com",
+	"cash" : 120000
+}],
+
+"product" : [
 {
 	"id": 1,
 	"name": "바나나",
@@ -209,4 +243,4 @@
 	"stock": 100,
 	"discount": null
 }
-]
+]}
