@@ -24,6 +24,7 @@
 			const loginArea = document.getElementById('loginWrap');
 			const cashArea = document.getElementById('pointArea')
 
+
 			//제품 배열
 			let martitem = []
 			let members = ""
@@ -46,7 +47,7 @@
 			const _carBt = document.getElementById('cartbt')
 			const _count = document.getElementsByClassName('.counts')
 			
-			_f_login(members, loginArea, cashArea)
+			_f_login(members, loginArea, cashArea, _martItem)
 			
 			// 로그인 회원 정보 불러오기
 			let loginMember = new Array(
@@ -174,10 +175,7 @@
 								_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
 							_HTML += '</li>';
 						}
-					   _cartlisWrap.innerHTML = _HTML
-						console.log(member.push(member))
-						console.log(member)
-				   
+					   _cartlisWrap.innerHTML = _HTML   
 					},
 					error: function (xhr) {
 						alert(xhr)
@@ -475,7 +473,13 @@
 		}
 
 		//로그인 기능
-		function _f_login(member, loginArea, cashArea) {
+		function _f_login(member, loginArea, cashArea, _martItem) {
+
+			// console.log(_martItem.length)
+			// console.log(document.getElementById('martitemlist3'))
+			// for(let i=0; i < _martItem.length;  i++ ){
+			// 	document.getElementById('martitemlist'+i )
+			// }
 			
 			let userid = document.getElementById('memberId');
 			let userpw = document.getElementById('memberPw');
@@ -489,7 +493,6 @@
 				let user = data.memberinfo;
 				
 				member = [...user]
-				console.log(member)
 
 				loginBtn.addEventListener('click', function(){
 									
