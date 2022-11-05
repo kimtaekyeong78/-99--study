@@ -21,8 +21,10 @@
 			
 			const chklist = document.getElementById('itemList')
 			const cart_view = document.getElementById('cartlistWrap')
-			const loginArea = document.getElementById('loginWrap');
+			const loginArea = document.getElementById('loginWrap')
 			const cashArea = document.getElementById('pointArea')
+			const buyBtn = document.getElementById('buyBt')
+
 
 
 			//제품 배열
@@ -47,7 +49,6 @@
 			const _carBt = document.getElementById('cartbt')
 			const _count = document.getElementsByClassName('.counts')
 			
-			_f_login(members, loginArea, cashArea, _martItem)
 			
 			// 로그인 회원 정보 불러오기
 			let loginMember = new Array(
@@ -65,32 +66,12 @@
 
 			_f_pagenation(_martItem)
 			
-
 			_f_initWishListButton(_carBt, cartArray, cartArrayTotal, cart_view, _martItem)
 
-			
-			
-			//장바구니 담기 버튼을 눌렀을 때, 이벤트 생성 - 배열로 가지고와서 다시 작업 해야함
-			// document.getElementById('buyBt').addEventListener('click', function(){
-			// 	console.log("현재내가 가지고있는포인트")
-			// 	console.log(localStorage.totalPrice)
-			// 	let buyconfirm = confirm("구매를 확정하시겠습니까?")
+			_f_login(members, loginArea, cashArea, buyBtn, cartArray, buyArray, cartArrayTotal)
 
-			// 	if(buyconfirm == true){
 
-			// 		localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
-
-			// 		alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
-			// 		document.getElementById('cartWrap').style.display = 'none';
-			// 		document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
-			// 		buyArray.push(cartArray, cartArrayTotal)
-			// 		console.log("최종구매 배열")
-			// 		console.log(buyArray)
-
-			// 	}return false
-
-			// })
-
+			// _f_buy(buyBtn, members)
 
 		}
 
@@ -473,14 +454,8 @@
 		}
 
 		//로그인 기능
-		function _f_login(member, loginArea, cashArea, _martItem) {
+		function _f_login(member, loginArea, cashArea, buyBtn, cartArray, buyArray, cartArrayTotal) {
 
-			// console.log(_martItem.length)
-			// console.log(document.getElementById('martitemlist3'))
-			// for(let i=0; i < _martItem.length;  i++ ){
-			// 	document.getElementById('martitemlist'+i )
-			// }
-			
 			let userid = document.getElementById('memberId');
 			let userpw = document.getElementById('memberPw');
 			const loginBtn = document.getElementById('loginBtn');
@@ -511,19 +486,85 @@
 							loginArea.style.display = 'none';
 							cashArea.style.display = 'inline-block';
 
+							buyBtn.addEventListener('click', function(){
+								console.log(useridx)
+								let buyconfirm = confirm("구매를 확정하시겠습니까?")
+								let remaining  = member[useridx].cash - cartArrayTotal[0].totalPrice
+
+								if(buyconfirm == true){
+									alert("구매가 완료되었습니다" + remaining + "원 남았습니다.")
+									document.getElementById('cartWrap').style.display = 'none';
+									_usercash.innerHTML = remaining;
+								
+								}return false				
+							})
 
 						}else{
 							alert("비밀번호를 확인해주세요")
-						}
+						}return false
 						
 					}else{
 						alert("아이디를 확인해주세요")
+								console.log('test1')
 					}	
 					 	
 				})
 				
+				buyBtn.addEventListener('click', function(){
+					alert("로그인 후 구매 가능합니다.")
+										
+				})
+
+				
+
+				// let butEvent = function _f_buy(buyBtn, members) {
+
+
+				// 	console.log("현재내가 가지고있는포인트")
+				// 	console.log(loginMember)
+				// 	let buyconfirm = confirm("구매를 확정하시겠습니까?")
+
+				// 	if(buyconfirm == true){
+
+				// 		localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
+
+				// 		alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
+				// 		document.getElementById('cartWrap').style.display = 'none';
+				// 		document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
+				// 		buyArray.push(cartArray, cartArrayTotal)
+				// 		console.log("최종구매 배열")
+				// 		console.log(buyArray)
+
+				// 	}return false
+
+
+				// }
+				
 			})
 		}
+
+		// function _f_buy(buyBtn, members) {
+
+
+		// 		// console.log("현재내가 가지고있는포인트")
+		// 		// console.log(loginMember)
+		// 		// let buyconfirm = confirm("구매를 확정하시겠습니까?")
+
+		// 		// if(buyconfirm == true){
+
+		// 		// 	localStorage.totalPrice = localStorage.totalPrice - cartListItemTotalval
+
+		// 		// 	alert(cartListItemTotalval+"포인트차감으로 " + localStorage.totalPrice + "포인트가 남게됩니다.")
+		// 		// 	document.getElementById('cartWrap').style.display = 'none';
+		// 		// 	document.getElementById('price').innerHTML = localStorage.getItem('totalPrice')
+		// 		// 	buyArray.push(cartArray, cartArrayTotal)
+		// 		// 	console.log("최종구매 배열")
+		// 		// 	console.log(buyArray)
+
+		// 		// }return false
+
+			
+		// }
 
 
 	</script>
