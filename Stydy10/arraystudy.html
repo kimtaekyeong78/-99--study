@@ -19,7 +19,7 @@
 			
 			// _f_initPriceButton() - 다시 작업 해야됨 
 			
-			const chklist = document.getElementById('itemListWrap')
+			const chklist = document.getElementById('itemList')
 			const cart_view = document.getElementById('cartlistWrap')
 			const loginArea = document.getElementById('loginWrap');
 			const cashArea = document.getElementById('pointArea')
@@ -39,7 +39,6 @@
 			// })
 
 
-			_f_login(members, loginArea, cashArea)
 			_f_initAjaxList(martitem, members)
 
 			
@@ -47,6 +46,7 @@
 			const _carBt = document.getElementById('cartbt')
 			const _count = document.getElementsByClassName('.counts')
 			
+			_f_login(members, loginArea, cashArea)
 			
 			// 로그인 회원 정보 불러오기
 			let loginMember = new Array(
@@ -168,7 +168,7 @@
 						for(let i=0; i < arr.length;  i++ ){
 														
 							_HTML += '<li class="item">';
-								_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" disabled data-price="'+ arr[i].price +'" name="mart" value="'+arr[i].name+'" />';
+								_HTML += '<input class="name" id="martitemlist'+(i+1)+'" type="checkbox" data-price="'+ arr[i].price +'" name="mart" value="'+arr[i].name+'" />';
 								_HTML += '<label for="martitemlist'+(i+1)+'">'+arr[i].name+'</label>';
 								_HTML += "<span>"+ arr[i].price + "원" + "</span>"
 								_HTML += '<input class="counts" id="count'+i+'" placeholder="0" disabled min="0" type="number" name="count">';
@@ -507,6 +507,7 @@
 							_usercash.innerHTML += member[useridx].cash
 							loginArea.style.display = 'none';
 							cashArea.style.display = 'inline-block';
+
 
 						}else{
 							alert("비밀번호를 확인해주세요")
