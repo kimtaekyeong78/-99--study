@@ -171,7 +171,7 @@
 					return (prev += curr.amount)
 				}, 0)
 
-				total.push({totalPrice : cartListItemTotalval})
+				total.splice(0,1,{totalPrice : cartListItemTotalval})
 	
 				let cartListItemTotalWrap = document.getElementById('cartTotalWrap')					
 				let cartList = document.getElementsByClassName('cartListItem')
@@ -444,9 +444,11 @@
 				
 				member = [...user]
 
+				let useridx = -1;
+
 				loginBtn.addEventListener('click', function(){
 									
-					let useridx = user.findIndex(function(find) {
+					useridx = user.findIndex(function(find) {
 						if(find.id === userid.value) {
 							return true;
 						}
@@ -454,26 +456,14 @@
 					});
 					
 					if(useridx >= 0){
+						userid.setAttribute('value', user[useridx].id)
 
 						if( userid.value === user[useridx].id && userpw.value === user[useridx].password){
 							console.log("일치한다")
-							_usercash.innerHTML += member[useridx].cash
+							_usercash.innerHTML = member[useridx].cash
 							loginArea.style.display = 'none';
 							cashArea.style.display = 'inline-block';
-
-							buyBtn.addEventListener('click', function(){
-								console.log(useridx)
-								let buyconfirm = confirm("구매를 확정하시겠습니까?")
-								let remaining  = member[useridx].cash - cartArrayTotal[0].totalPrice
-
-								if(buyconfirm == true){
-									alert("구매가 완료되었습니다" + remaining + "원 남았습니다.")
-									document.getElementById('cartWrap').style.display = 'none';
-									_usercash.innerHTML = remaining;
-																	
-								}return false				
-							})
-
+							
 						}else{
 							alert("비밀번호를 확인해주세요")
 						}return false
@@ -485,7 +475,23 @@
 				})
 				
 				buyBtn.addEventListener('click', function(){
-					alert("로그인 후 구매 가능합니다.")
+					console.log(useridx)
+
+					if(useridx >= 0){
+						let buyconfirm = confirm("구매를 확정하시겠습니까?")
+						let remaining  = member[useridx].cash - cartArrayTotal[0].totalPrice
+
+						if(buyconfirm == true){
+							document.getElementById('cartWrap').style.display = 'none';
+							user[useridx].cash = remaining
+							_usercash.innerHTML = remaining
+							alert("구매가 완료되었습니다" + remaining + "원 남았습니다.")
+															
+						}return false	
+						
+					}else{
+						alert("로그인 후 구매 가능합니다.")
+					}
 										
 				})
 				
@@ -504,7 +510,7 @@
 			</div>
 			<div id="loginWrap">
 				<label for="memberId">아이디</label>
-				<input id="memberId" type="text" name="userid" placeholder="아이디를 입력하세요" value="">
+				<input id="memberId" type="text" name="userid" placeholder="아이디를 입력하세요">
 				<label for="memberPw">비밀번호</label>
 				<input id="memberPw" type="password" name="password" placeholder="비밀번호를 입력하세요" value="">
 				<input id="loginBtn" type="button" value="로그인">
