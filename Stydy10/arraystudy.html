@@ -491,6 +491,7 @@
 						
 					}else{
 						alert("로그인 후 구매 가능합니다.")
+						document.getElementById('cartWrap').style.display = 'none';
 					}
 										
 				})
@@ -504,10 +505,6 @@
 	<div id="container">
 
 		<div id="utilWrap">
-			<div id="pointArea">
-				<span>현재 나의 포인트</span>
-				<button type="button" id="price"></button>
-			</div>
 			<div id="loginWrap">
 				<label for="memberId">아이디</label>
 				<input id="memberId" type="text" name="userid" placeholder="아이디를 입력하세요">
@@ -515,12 +512,17 @@
 				<input id="memberPw" type="password" name="password" placeholder="비밀번호를 입력하세요" value="">
 				<input id="loginBtn" type="button" value="로그인">
 			</div>
+			<div id="pointArea">
+				<span>현재 나의 포인트</span>
+				<span id="price"></span>
+			</div>
 		</div>
 
-		<h1>Cart 만들기</h1>
+		<h1>상품목록</h1>
 
 		<div id="itemWrap">
 			<ul id="itemList">
+				<li></li>
 
 			</ul>
 		</div>

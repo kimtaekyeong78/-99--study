@@ -1,0 +1,26 @@
+
+body { 
+    width: 100%;
+    height: 5000px;
+    background: #000;
+    font-family: 'nanumsquare';
+
+    .motion{
+        display: flex;
+        width: 500px;
+        border: 1px solid #fff;
+        justify-content: center;
+        align-items: center;
+        
+        
+    }
+
+    div {
+        margin: 500px auto;
+        color: #fff;
+        font-size: 38px;
+        text-align: center;
+        opacity: 0;
+        transition: all 1s;
+    }
+}

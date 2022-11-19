@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+	<title>스크롤애니메이션</title>
+	<link crossorigin="anonymous" media="all" rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+	
+	<div class="motion">애니메이션 효과1</div>
+	<div class="motion">애니메이션 효과2</div>
+	<div class="motion">애니메이션 효과3</div>
+	<div class="motion">애니메이션 효과4</div>
+</body>
+<script>
+
+	let observer = new IntersectionObserver((e)=>{
+
+		e.forEach((div)=>{
+			if(div.isIntersecting){
+				div.target.style.opacity = 1;
+				div.target.style.width = '800px';
+				div.target.style.background = 'red';
+				div.target.style.height = '300px';r
+			}else{
+				
+				div.target.style.opacity = 0;
+			}
+		})
+
+	})
+
+	let div = document.querySelectorAll('div')
+	observer.observe(div[0])
+	observer.observe(div[1])
+	observer.observe(div[2])
+	observer.observe(div[3])
+
+</script>
+</html>
