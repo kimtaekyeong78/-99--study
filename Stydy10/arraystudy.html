@@ -108,7 +108,7 @@
 
 			try{
 				$.ajax({
-					url: `http://127.0.0.1:5500/Stydy10/api/mart.json`,
+					url: `http://127.0.0.1:5500/-99--study/Stydy10/api/mart.json`,
 					method: 'GET',
 					async: false,
 					dataType: 'json',
@@ -481,13 +481,17 @@
 						let buyconfirm = confirm("구매를 확정하시겠습니까?")
 						let remaining  = member[useridx].cash - cartArrayTotal[0].totalPrice
 
-						if(buyconfirm == true){
+						if(buyconfirm == true && member[useridx].cash > cartArrayTotal[0].totalPrice){
 							document.getElementById('cartWrap').style.display = 'none';
 							user[useridx].cash = remaining
 							_usercash.innerHTML = remaining
 							alert("구매가 완료되었습니다" + remaining + "원 남았습니다.")
-															
-						}return false	
+														
+						}else{
+							
+							alert(cartArrayTotal[0].totalPrice - user[useridx].cash + "원" + "잔액이 부족합니다 충전해주세요")
+
+						}
 						
 					}else{
 						alert("로그인 후 구매 가능합니다.")
