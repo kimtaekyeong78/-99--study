@@ -1,0 +1,34 @@
+@import url(/-99--study/Study12/css/reset.css);
+#wrap {
+  width: 450px;
+  height: 500px;
+  margin: 20px 33%;
+}
+#wrap .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#wrap .tab button {
+  width: 150px;
+  height: 30px;
+}
+#wrap .tab button.active {
+  background: gray;
+}
+#wrap .menu {
+  height: 500px;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  font-size: 20px;
+  font-weight: 700;
+}
+#wrap .menu .tabCnt {
+  display: none;
+}
+#wrap .menu .tabCnt.active {
+  display: block;
+}/*# sourceMappingURL=tabMenu.css.map */

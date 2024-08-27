@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>tabMenu</title>
+		<link rel="stylesheet" href="/-99--study/Study12/scss/tabMenu.css" />
+		<script>
+			window.onload = function () {
+				const _tabMenu = document.getElementById("wrap");
+				const _tabButton = _tabMenu.getElementsByTagName("button");
+
+				for (let i = 0; i < _tabButton.length; i++) {
+					_tabButton[i].onclick = function (e) {
+						let _target = e.target;
+						let _parent = _target.parentNode;
+						let _index = [].indexOf.call(_parent.children, _target);
+						let _tabContent = document.getElementsByClassName("tabCnt");
+
+						document.querySelector("button.active").classList.remove("active");
+						document.querySelector("div.active").classList.remove("active");
+
+						this.classList.add("active");
+						_tabContent[_index].classList.add("active");
+
+						console.log(_parent, children);
+					};
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="tab">
+				<button class="active" type="button">탭1</button>
+				<button type="button">탭2</button>
+				<button type="button">탭3</button>
+			</div>
+			<div class="menu">
+				<div class="tabCnt active" name="1">탭1의 내용</div>
+				<div class="tabCnt" name="2">탭2의 내용</div>
+				<div class="tabCnt" name="3">탭3의 내용</div>
+			</div>
+		</div>
+	</body>
+</html>

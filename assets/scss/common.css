@@ -7,14 +7,10 @@ html, body, div, p, h1, h2, h3, h4, h5, section, article, span {
   width: 500px;
   height: 500px;
 }
-
 #tabwrap ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   position: relative;
 }
-
 #tabwrap ul li {
   list-style: none;
   width: 33.333%;
@@ -23,15 +19,12 @@ html, body, div, p, h1, h2, h3, h4, h5, section, article, span {
   text-align: center;
   cursor: pointer;
 }
-
 #tabwrap ul li.active {
   background: #666;
 }
-
 #tabwrap .contents {
   display: none;
 }
-
 #tabwrap .contents.active {
   display: block;
-}
+}/*# sourceMappingURL=common.css.map */

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Array</title>
+		<link rel="stylesheet" href="/-99--study/css/common.css" />
+		<script type="text/javascript">
+			function handleSoldout(val) {
+				if (val === false) {
+					alert("다 팔렸습니다");
+				} else {
+					alert("구매 가능합니다");
+				}
+			}
+			window.onload = function () {
+				const articleList = document.getElementById("shap");
+
+				let _array = new Array(
+					{ name: "g마켓", article: "술", price: 3000, count: 100, sold: true },
+					{ name: "쿠팡", article: "생수", price: 1500, count: 0, sold: false },
+					{ name: "11번가", article: "음료수", price: 1000, count: 50, sold: true },
+					{ name: "네이버 쇼핑", article: "커피", price: 1000, count: 0, sold: false }
+				);
+
+				let commodity = "";
+
+				for (i = 0; i < _array.length; i++) {
+					if (_array[i].count > 0) {
+						_array[i].sold = true;
+					}
+
+					commodity += "<ul>";
+					commodity += "<li>" + _array[i].name + "</li>";
+					commodity += "<li>" + _array[i].article + "</li>";
+					commodity += "<li>" + _array[i].price + "</li>";
+					commodity + -"<li>" + _array[i].count + "</li>";
+					commodity +=
+						"<li><button type='text' onclick = 'handleSoldout'(" +
+						_array[i].sold +
+						")>수량 체크</button></li>";
+					commodity += "</ul>";
+				}
+				articleList.innerHTML = commodity;
+			};
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="shap"></div>
+		</div>
+	</body>
+</html>
