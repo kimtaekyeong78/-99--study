@@ -1,128 +1,147 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-	<title>javascript</title>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-	<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
-	<script type="text/javascript">
-		
-		
-		window.onload = function(){
-		
-			_f_initAgreeForm()
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"
+		/>
+		<title>javascript</title>
+		<script
+			src="https://code.jquery.com/jquery-1.12.4.min.js"
+			integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+			crossorigin="anonymous"
+		></script>
+		<link crossorigin="anonymous" media="all" rel="stylesheet" href="/assets/scss/common.css" />
+		<script type="text/javascript">
+			//window.onload 이벤트 핸들러를 사용하여 페이지가 로드된 후에 _f_initAgreeForm() 함수 를 실행
+			//페이지로드의 정의 : HTML, SCSS, JavaScript, Images등 Page에서 사용되는 모든 리소스
+			//onload는 시점이 너무 뒤기때문에 DOMContentLoaded 를 사용하는게 좋음
+			//DOMContentLoaded 관련 코드는 검색해보길
+			window.onload = function () {
+				_f_initAgreeForm();
+			};
 
-		}
-		
-		function _f_initAgreeForm(){
-			
-			const ALLCHECK = document.getElementById('check_all');
-			const AGREECHECKS = document.querySelectorAll('input[name=check]');
-			
-			//전체 선택
-			ALLCHECK.addEventListener('change', function(e){
-				
-				for( let i=0; i < AGREECHECKS.length; i++){
-					console.log(AGREECHECKS[i])
-					AGREECHECKS[i].checked = e.target.checked
-					
-					function _araiChecked(val){
-						AGREECHECKS[i].setAttribute('aria-checked', val)
-						e.target.setAttribute('aria-checked', val)
-					}
+			// 전체 동의 & 개별 동의에 대해 체크박스의 상태를 관리하는 Function
+			function _f_initAgreeForm() {
+				//DOM Content의 ID가 'check_all'인 DOM을 상수 ALLCHECK에 참조
+				const ALLCHECK = document.getElementById("check_all");
 
-					if( AGREECHECKS[i].getAttribute('aria-checked') == 'false' ){
-						
-						_araiChecked('true')
-						
-					}else{
-						_araiChecked('false')
+				//DOM에서 Input Tag의 name의 속성(attribute)이 check인 모든 input 요소들을 선택하여 NodeList로 상수 AGREECHECKS에 배열(Arrary)로 참조.
+				const AGREECHECKS = document.querySelectorAll("input[name=check]");
+
+				console.log("DOM Selected: ", ALLCHECK, AGREECHECKS);
+
+				//전체 선택
+				// 'change' handle event를 사용하여 'ALLCHECK' 체크박스의 상태가 변경될 때 마다 개별 체크박스의 상태를 변경하는 로직
+				ALLCHECK.addEventListener("change", function (e) {
+					// "전체 동의" 체크박스에 'change' 이벤트 리스너(Event Listener)를 추가
+					// 모든 개별 체크박스를 i가 AGREECHECKS.length 개수와 같을때까지 반복
+					for (let i = 0; i < AGREECHECKS.length; i++) {
+						// 현재 반복 중인 개별 체크박스를 console에 출력 (디버깅 용도)
+						console.log(AGREECHECKS[i]);
+
+						AGREECHECKS[i].checked = e.target.checked; // 개별 체크박스의 상태를 "전체 동의" 체크박스의 상태로 설정
+
+						function _araiChecked(val) {
+							// aria-checked 속성을 업데이트하는 함수 정의
+							// 현재 개별 체크박스의 aria-checked 속성을 매개변수 val로 설정
+							AGREECHECKS[i].setAttribute("aria-checked", val);
+
+							// "전체 동의" 체크박스의 aria-checked 속성을 업데이트
+							// ALLCHECK(전체 동의) 체크박스의 aria-checked 속성을 매개변수 val로 설정
+							e.target.setAttribute("aria-checked", val);
+						}
+
+						// 개별 체크박스의 aria-checked 속성이 "false"인 경우를 확인합니다.
+						if (AGREECHECKS[i].getAttribute("aria-checked") == "false") {
+							// 개별 체크박스의 aria-checked 속성이 "false"인 경우
+							_araiChecked("true"); // aria-checked 속성을 "true"로 설정
+						} else {
+							// 개별 체크박스의 aria-checked 속성이 "true"인 경우
+							_araiChecked("false"); // aria-checked 속성을 "false"로 설정
+						}
 					}
+				});
+
+				//개별 선택
+				// 모든 개별 동의 체크박스를 AGREECHECKS.length 개수만큼 반복
+				for (let i = 0; i < AGREECHECKS.length; i++) {
+					AGREECHECKS[i].addEventListener("change", function (e) {
+						// 개별 체크박스에 'change' 이벤트 리스너를 추가
+						function _allChecked(val) {
+							// 전체 동의 체크박스 상태를 설정하는 함수 정의
+							ALLCHECK.checked = val; // 전체 동의 체크박스의 'checked' 속성을 매개변수 'val'로 설정
+							ALLCHECK.setAttribute("aria-checked", `${val}`); // 전체 동의 체크박스의 'aria-checked' 속성을 매개변수 'val'로 설정
+						}
+
+						// 현재 개별 체크박스가 선택되지 않은 경우
+						if (!AGREECHECKS[i].checked) {
+							// 개별 체크박스의 'aria-checked' 속성을 "false"로 설정
+							AGREECHECKS[i].setAttribute("aria-checked", "false");
+
+							// 전체 체크박스가 체크되어 있거나 'aria-checked'가 "true"인 경우
+							if (ALLCHECK.checked || ALLCHECK.getAttribute("aria-checked") == "true") {
+								// 전체 동의 체크박스를 체크 해제하고 'aria-checked'를 "false"로 설정
+								_allChecked(false);
+							}
+						} else {
+							// 현재 개별 체크박스가 선택된 경우
+							AGREECHECKS[i].setAttribute("aria-checked", "true"); // 개별 체크박스의 'aria-checked' 속성을 "true"로 설정
+							let _agreeCheck = [
+								// 모든 개별 체크박스의 'aria-checked' 속성을 모은 배열 생성
+								{ checked: AGREECHECKS[0].getAttribute("aria-checked") }, // 첫 번째 체크박스의 'aria-checked' 값
+								{ checked: AGREECHECKS[1].getAttribute("aria-checked") }, // 두 번째 체크박스의 'aria-checked' 값
+								{ checked: AGREECHECKS[2].getAttribute("aria-checked") }, // 세 번째 체크박스의 'aria-checked' 값
+								{ checked: AGREECHECKS[3].getAttribute("aria-checked") }, // 네 번째 체크박스의 'aria-checked' 값
+							];
+
+							if (_agreeCheck.every((item) => item.checked == "true")) {
+								// 모든 개별 체크박스가 선택된 경우
+								_allChecked(true); // 전체 동의 체크박스를 체크하고 'aria-checked'를 "true"로 설정
+							}
+						}
+					});
 				}
-			})
-
-			
-			//개별 선택
-			for( let i=0; i < AGREECHECKS.length; i++){
-
-				AGREECHECKS[i].addEventListener('change', function(e){
-
-					function _allChecked(val){
-						ALLCHECK.checked = val
-						ALLCHECK.setAttribute('aria-checked', `${val}`)
-					}		
-
-					if( !AGREECHECKS[i].checked){
-						AGREECHECKS[i].setAttribute('aria-checked', 'false')
-
-						if( ALLCHECK.checked || ALLCHECK.getAttribute('aria-checked') == 'true' ){
-
-							_allChecked(false)
-						}
-						
-					}else{
-						AGREECHECKS[i].setAttribute('aria-checked', 'true')
-						let _agreeCheck = [
-							{checked: AGREECHECKS[0].getAttribute('aria-checked')},
-							{checked: AGREECHECKS[1].getAttribute('aria-checked')},
-							{checked: AGREECHECKS[2].getAttribute('aria-checked')},
-							{checked: AGREECHECKS[3].getAttribute('aria-checked')},
-						]
-						
-						if( _agreeCheck.every((item) => item.checked == 'true') ){
-							_allChecked(true)
-						}
-
-					}
-				})
 			}
-		}
+		</script>
+	</head>
+	<body>
+		<section id="agree" style="display: block">
+			<ul>
+				<li>
+					<input type="checkbox" name="check_all" id="check_all" aria-checked="false" />
+					<label for="check_all">전체동의</label>
+				</li>
+			</ul>
 
-	
-	</script>
-</head>
-<body>
-	
-	<section id="agree" style="display: block;">
-		
-		<ul>
-			<li>
-				<input type="checkbox" name="check_all" id="check_all" aria-checked="false">
-				<label for="check_all">전체동의</label>
-			</li>
-		</ul>
+			<ul>
+				<li>
+					<input type="checkbox" name="check" id="check1" aria-checked="false" />
+					<label for="check1">필수동의 1</label>
+				</li>
+				<li>
+					<input type="checkbox" name="check" id="check2" aria-checked="false" />
+					<label for="check2">필수동의 2</label>
+				</li>
+				<li>
+					<input type="checkbox" name="check" id="check3" aria-checked="false" />
+					<label for="check3">선택동의 1</label>
+				</li>
+				<li>
+					<input type="checkbox" name="check" id="check4" aria-checked="false" />
+					<label for="check4">선택동의 2</label>
+				</li>
+			</ul>
+		</section>
 
-		<ul>
-			<li>
-				<input type="checkbox" name="check" id="check1" aria-checked="false">
-				<label for="check1">필수동의 1</label>
-			</li>
-			<li>
-				<input type="checkbox" name="check" id="check2" aria-checked="false">
-				<label for="check2">필수동의 2</label>
-			</li>
-			<li>
-				<input type="checkbox" name="check" id="check3" aria-checked="false">
-				<label for="check3">선택동의 1</label>
-			</li>
-			<li>
-				<input type="checkbox" name="check" id="check4" aria-checked="false">
-				<label for="check4">선택동의 2</label>
-			</li>
-		</ul>
-		
-
-	</section>
-
-	<section id="member" style="display:none">
-		<ul>
-			<li>
-				<label for="id">아이디</label>
-				<input type="text" maxlength="8" id="id" name="id" >
-			</li>
-		</ul>
-	</section>
-
-</body>
+		<section id="member" style="display: none">
+			<ul>
+				<li>
+					<label for="id">아이디</label>
+					<input type="text" maxlength="8" id="id" name="id" />
+				</li>
+			</ul>
+		</section>
+	</body>
 </html>
