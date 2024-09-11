@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>innerHTML count-up</title>
+		<link rel="stylesheet" href="/Study12/scss/innerhtml.css">
+		<script type="text/javascript">
+			var num_1 = 0;
+			var num_2 = 0;
+			var num_3 = 0;
+
+			function add(){
+				let CntsOne = document.querySelector("#CntsOne");
+				num_1 +=1;
+
+				CntsOne.innerHTML += '<p>추가' +num_1+ '</p>'
+			}
+			
+			function add_1(){
+				let CntsTwo = document.querySelector("#CntsTwo");
+				num_2 +=1;
+
+				CntsTwo.innerHTML += '<p>콜라' +num_2+ '</p>'
+			}
+
+			function add_2(){
+				let CntsThree = document.querySelector("#CntsThree");
+				num_3 +=1;
+
+				CntsThree.innerHTML += '<p>사이다' +num_3+ '</p>'
+			}
+
+
+			function resetOne(){
+				let Reset = document.querySelector("#reset")
+				let CntsOne = document.querySelector("#CntsOne")
+
+				CntsOne.innerHTML = "";
+			}
+
+			function resetTwo(){
+				let Reset = document.querySelector("#reset")
+				let CntsOne = document.querySelector("#CntsTwo")
+
+				CntsOne.innerHTML = "";
+			}
+
+			function resetThree(){
+				let Reset = document.querySelector("#reset")
+				let CntsOne = document.querySelector("#CntsThree")
+
+				CntsOne.innerHTML = "";
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div>
+				<button type="button" id="add" onclick = "add()">HTML추가</button>
+				<div id="CntsOne" class="contents"></div>
+				<button type="button" id="reset" onclick ="resetOne()">리셋</button>
+			</div>
+			<div>
+				<button type="button" id="add" onclick = "add_1()">HTML추가</button>
+				<div id="CntsTwo" class="contents"></div>
+				<button type="button" id="reset" onclick ="resetTwo()">리셋</button>
+			</div>
+			<div>
+				<button type="button" id="add" onclick = "add_2()">HTML추가</button>
+				<div id="CntsThree" class="contents"></div>
+				<button type="button" id="reset" onclick ="resetThree()">리셋</button>
+			</div> 
+		</div>
+</html>
