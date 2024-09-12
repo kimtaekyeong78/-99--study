@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title>innerHTML count-up</title>
+		<link rel="stylesheet" href="/study13/innerhtml.css" />
+		<script type="text/javascript">
+			// 공통 변수를 객체로 관리하여 리팩토링
+			const counters = {
+				one: 0,
+				two: 0,
+				three: 0,
+			};
+
+			function add(elementId, counterKey, text) {
+				// 지정된 id에 요소 추가
+				let container = document.querySelector(`#${elementId}`);
+				counters[counterKey] += 1;
+
+				container.innerHTML += `<p>${text} ${counters[counterKey]}</p>`;
+			}
+
+			function reset(elementId) {
+				// 지정된 id의 요소 내용 제거
+				let container = document.querySelector(`#${elementId}`);
+				container.innerHTML = "";
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div>
+				<button type="button" onclick="add('CntsOne', 'one', '추가')">HTML추가</button>
+				<div id="CntsOne" class="contents"></div>
+				<button type="button" onclick="reset('CntsOne')">리셋</button>
+			</div>
+			<div>
+				<button type="button" onclick="add('CntsTwo', 'two', '콜라')">HTML추가</button>
+				<div id="CntsTwo" class="contents"></div>
+				<button type="button" onclick="reset('CntsTwo')">리셋</button>
+			</div>
+			<div>
+				<button type="button" onclick="add('CntsThree', 'three', '사이다')">HTML추가</button>
+				<div id="CntsThree" class="contents"></div>
+				<button type="button" onclick="reset('CntsThree')">리셋</button>
+			</div>
+		</div>
+	</body>
+</html>
