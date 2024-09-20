@@ -14,14 +14,40 @@
 				three: 0,
 			};
 
-			function add(elementId, counterKey, text) {
+			function addOne(elementId, counterKey, text) {
 				// 지정된 id에 요소 추가
 				let container = document.querySelector(`#${elementId}`);
+		
 				counters[counterKey] += 1;
 
 				container.innerHTML += `<p>${text} ${counters[counterKey]}</p>`;
+				document.querySelector('#countOne').innerHTML = counters[counterKey];
 
+				console.log('#countOne')
 			}
+			// 하나의 function으로 해결해보려 했으나 addOne의 html추가 버튼에서 나머지 DOM개수를 세버려서 3개로 나눔 
+			function addTwo(elementId, counterKey, text) {
+				// 두번째 html추가 버튼의 DOM개수 세기 기능
+				let container = document.querySelector(`#${elementId}`);
+		
+				counters[counterKey] += 1;
+
+				container.innerHTML += `<p>${text} ${counters[counterKey]}</p>`;
+				document.querySelector('#countTwo').innerHTML = counters[counterKey];
+			}
+
+			function addThree(elementId, counterKey, text) {
+				// 세번째 html추가 버튼의 DOM개수 세기 기능
+				let container = document.querySelector(`#${elementId}`);
+		
+				counters[counterKey] += 1;
+
+				container.innerHTML += `<p>${text} ${counters[counterKey]}</p>`;
+				document.querySelector('#countThree').innerHTML = counters[counterKey];
+			}
+			
+			console.log()
+	
 
 			function reset(elementId) {
 				// 지정된 id의 요소 내용 제거
@@ -39,31 +65,33 @@
 				container.removeChild(container.lastElementChild);
 				
 			}
-			console.log()
 		</script>
 	</head>
 	<body>
 		<div id="wrap">
 			<div>
-				<button type="button" onclick="add('CntsOne', 'one', '추가')">HTML추가</button>
+				<button type="button" onclick="addOne('CntsOne', 'one', '추가')">HTML추가</button>
+				<span id="countOne"></span>
 				<div id="CntsOne" class="contents"></div>
-				<button type="button" onclick="reset('CntsOne')">리셋</button>
-				<button type="button" onclick="deleteFirst('CntsOne')">첫줄 삭제</button>
-				<button type="button" onclick="deleteLast('CntsOne')">마지막 줄 삭제</button>
+				<button type="button" onclick="reset('CntsOne')" disabled>리셋</button>
+				<button type="button" onclick="deleteFirst('CntsOne')"disabled>첫줄 삭제</button>
+				<button type="button" onclick="deleteLast('CntsOne')" disabled>마지막 줄 삭제</button>
 			</div>
 			<div>
-				<button type="button" onclick="add('CntsTwo', 'two', '콜라')">HTML추가</button>
+				<button type="button" onclick="addTwo('CntsTwo', 'two', '콜라')">HTML추가</button>
+				<span id="countTwo"></span>
 				<div id="CntsTwo" class="contents"></div>
-				<button type="button" onclick="reset('CntsTwo')">리셋</button>
-				<button type="button" onclick="deleteFirst('CntsTwo')">첫줄 삭제</button>
-				<button type="button" onclick="deleteLast('CntsTwo')">마지막 줄 삭제</button>
+				<button type="button" onclick="reset('CntsTwo')" disabled>리셋</button>
+				<button type="button" onclick="deleteFirst('CntsTwo')" disabled>첫줄 삭제</button>
+				<button type="button" onclick="deleteLast('CntsTwo')" disabled>마지막 줄 삭제</button>
 			</div>
 			<div>
-				<button type="button" onclick="add('CntsThree', 'three', '사이다')">HTML추가</button>
+				<button type="button" onclick="addThree('CntsThree', 'three', '사이다')">HTML추가</button>
+				<span id="countThree"></span>
 				<div id="CntsThree" class="contents"></div>
-				<button type="button" onclick="reset('CntsThree')">리셋</button>
-				<button type="button" onclick="deleteFirst('CntsThree')">첫줄 삭제</button>
-				<button type="button" onclick="deleteLast('CntsThree')">마지막 줄 삭제</button>
+				<button type="button" onclick="reset('CntsThree')" disabled>리셋</button>
+				<button type="button" onclick="deleteFirst('CntsThree')" disabled>첫줄 삭제</button>
+				<button type="button" onclick="deleteLast('CntsThree')" disabled>마지막 줄 삭제</button>
 			</div>
 		</div>
 	</body>
