@@ -10,12 +10,24 @@
 				three: 0,
 			};
 
+			function handleDomDelete(val) {
+				console.log(val);
+				val.remove();
+			}
+
 			function add(elementId, counterKey, text) {
 				// 지정된 id에 요소 추가
 				let container = document.querySelector(`#${elementId}`);
 				counters[counterKey] += 1;
 
-				container.innerHTML += `<p>${text} ${counters[counterKey]}</p>`;
+				let uniqId = `${elementId}_${counters[counterKey]}`;
+				container.innerHTML += `<div id=${uniqId}>
+					<p>${text} ${counters[counterKey]}</p>
+					<button type="button" onclick="handleDomDelete(${uniqId})">${text} ${counters[counterKey]}삭제</button>
+					</div>
+					`;
+
+				console.log(uniqId);
 			}
 
 			function reset(elementId) {
@@ -28,17 +40,23 @@
 	<body>
 		<div id="wrap">
 			<div>
-				<button type="button" onclick="add('CntsOne', 'one', '추가')">HTML추가</button>
+				<button type="button" onclick="add('CntsOne', 'one', '추가')">
+					HTML추가
+				</button>
 				<div id="CntsOne" class="contents"></div>
 				<button type="button" onclick="reset('CntsOne')">리셋</button>
 			</div>
 			<div>
-				<button type="button" onclick="add('CntsTwo', 'two', '콜라')">HTML추가</button>
+				<button type="button" onclick="add('CntsTwo', 'two', '콜라')">
+					HTML추가
+				</button>
 				<div id="CntsTwo" class="contents"></div>
 				<button type="button" onclick="reset('CntsTwo')">리셋</button>
 			</div>
 			<div>
-				<button type="button" onclick="add('CntsThree', 'three', '사이다')">HTML추가</button>
+				<button type="button" onclick="add('CntsThree', 'three', '사이다')">
+					HTML추가
+				</button>
 				<div id="CntsThree" class="contents"></div>
 				<button type="button" onclick="reset('CntsThree')">리셋</button>
 			</div>
